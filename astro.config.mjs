@@ -7,7 +7,7 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://diogopalhais.github.io',
-  base: '/digital-garden',
+  base: '/',
   integrations: [mdx(), sitemap(), tailwind(), react()],
   markdown: {
     shikiConfig: {
