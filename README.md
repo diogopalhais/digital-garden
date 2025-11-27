@@ -32,8 +32,8 @@ A personal portfolio website built with modern web technologies. Features a beau
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/digital-garden.git
-cd digital-garden
+git clone https://github.com/diogopalhais/diogopalhais.github.io.git
+cd diogopalhais.github.io
 
 # Install dependencies
 npm install
@@ -54,7 +54,7 @@ npm run dev
 ## Project Structure
 
 ```
-digital-garden/
+diogopalhais.github.io/
 ├── src/
 │   ├── components/     # Astro/React components
 │   ├── content/        # MDX content (projects, pages)
@@ -153,7 +153,7 @@ wrangler secret put TMDB_API_KEY  # optional
 
 ## Deployment
 
-This site is configured for GitHub Pages deployment. Push to `master` to trigger automatic deployment via GitHub Actions.
+This site is deployed to GitHub Pages at [diogopalhais.github.io](https://diogopalhais.github.io). Push to `master` to trigger automatic deployment via GitHub Actions.
 
 To deploy elsewhere:
 
