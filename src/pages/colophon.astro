@@ -1,0 +1,76 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'colophon');
+const { Content } = await page.render();
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <section class="container-page py-16">
+    <header class="mb-12">
+      <h1 class="mb-4 text-4xl font-bold text-text-primary md:text-5xl">
+        {page.data.title}
+      </h1>
+    </header>
+
+    <article class="prose-page">
+      <Content />
+    </article>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-page {
+    @apply max-w-2xl text-text-secondary;
+  }
+
+  .prose-page > p:first-of-type {
+    @apply text-lg leading-relaxed mb-12;
+  }
+
+  .prose-page h2 {
+    @apply text-xl font-medium text-text-primary mt-12 mb-4 first:mt-0;
+  }
+
+  .prose-page p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose-page strong {
+    @apply text-text-primary font-medium;
+  }
+
+  .prose-page ul {
+    @apply space-y-2 list-none pl-0 mb-6;
+  }
+
+  .prose-page li {
+    @apply flex items-start gap-2;
+  }
+
+  .prose-page li::before {
+    @apply content-['•'] text-accent mt-0;
+  }
+
+  .prose-page a {
+    @apply text-accent hover:underline;
+  }
+
+  .prose-page code {
+    @apply font-mono text-sm bg-card px-1.5 py-0.5 rounded text-text-primary;
+  }
+
+  .prose-page table {
+    @apply w-full border-collapse mb-6;
+  }
+
+  .prose-page th,
+  .prose-page td {
+    @apply border border-border/50 px-4 py-2 text-left;
+  }
+
+  .prose-page th {
+    @apply bg-card text-text-primary font-medium;
+  }
+</style>

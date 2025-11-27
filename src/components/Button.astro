@@ -1,0 +1,41 @@
+---
+export interface Props {
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  class?: string;
+  external?: boolean;
+}
+
+const { variant = 'primary', href, class: className = '', external = false } = Astro.props;
+
+const Element = href ? 'a' : 'button';
+const externalProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<Element
+  href={href}
+  class:list={[
+    'btn',
+    variant === 'primary' && 'btn-primary',
+    variant === 'secondary' && 'btn-secondary',
+    className,
+  ]}
+  {...externalProps}
+>
+  <slot />
+</Element>
+
+<style>
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-background hover:bg-accent-hover;
+  }
+
+  .btn-secondary {
+    @apply border border-border bg-card text-text-primary hover:border-border-hover hover:bg-card-hover;
+  }
+</style>
+

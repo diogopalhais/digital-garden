@@ -1,0 +1,9 @@
+name = "trakt-watching"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Required secrets (set via wrangler secret put):
+# - TRAKT_CLIENT_ID
+# - TRAKT_USERNAME
+# - TMDB_API_KEY (optional, for poster images)
+

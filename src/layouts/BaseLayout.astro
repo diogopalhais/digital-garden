@@ -1,0 +1,52 @@
+---
+import BaseHead from '@components/BaseHead.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import '@/styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+}
+
+const { title, description, image, type, publishedTime } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      publishedTime={publishedTime}
+    />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import { initAnimations } from '@lib/animations';
+      
+      // Initialize animations on page load
+      document.addEventListener('DOMContentLoaded', () => {
+        initAnimations();
+      });
+
+      // Re-initialize on view transitions
+      document.addEventListener('astro:page-load', () => {
+        initAnimations();
+      });
+    </script>
+  </body>
+</html>
+
+

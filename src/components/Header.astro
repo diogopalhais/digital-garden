@@ -1,0 +1,159 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const navItems = [
+  { href: `${base}`, label: ' ~' },
+  { href: `${base}about/`, label: 'about' },
+  { href: `${base}now/`, label: 'now' },
+  { href: `${base}watching/`, label: 'watching' },
+  { href: `${base}uses/`, label: 'uses' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 py-6">
+  <nav class="flex justify-center">
+    <ul class="nav-container">
+      {navItems.map((item) => {
+        const isActive = currentPath === item.href || 
+          (item.href !== base && currentPath.startsWith(item.href));
+        return (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'nav-link',
+                isActive && 'nav-link-active',
+              ]}
+            >
+              <span class="nav-slash">/</span>{item.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+
+  <!-- Mobile Menu Button -->
+  <button
+    id="mobile-menu-btn"
+    class="mobile-menu-btn"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="h-5 w-5"
+    >
+      <line x1="4" x2="20" y1="12" y2="12"></line>
+      <line x1="4" x2="20" y1="6" y2="6"></line>
+      <line x1="4" x2="20" y1="18" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="mobile-menu hidden"
+  >
+    <ul class="mobile-nav-list">
+      {navItems.map((item) => {
+        const isActive = currentPath === item.href || 
+          (item.href !== base && currentPath.startsWith(item.href));
+        return (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'mobile-nav-link',
+                isActive && 'mobile-nav-link-active',
+              ]}
+            >
+              <span class="text-accent">/</span>{item.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>
+
+<style>
+  header {
+    @apply pointer-events-none;
+  }
+
+  .nav-container {
+    @apply pointer-events-auto flex items-center gap-1 rounded-full border border-border/50 bg-card/80 px-2 py-2 backdrop-blur-xl;
+    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-link {
+    @apply relative px-4 py-2 text-sm font-medium text-text-secondary transition-all duration-200 rounded-full;
+  }
+
+  .nav-link:hover {
+    @apply text-text-primary;
+  }
+
+  .nav-link-active {
+    @apply bg-accent/10 text-accent;
+  }
+
+  .nav-slash {
+    @apply text-accent opacity-0 transition-opacity duration-200;
+  }
+
+  .nav-link:hover .nav-slash,
+  .nav-link-active .nav-slash {
+    @apply opacity-100;
+  }
+
+  /* Mobile Menu Button */
+  .mobile-menu-btn {
+    @apply pointer-events-auto fixed top-6 right-6 flex h-12 w-12 items-center justify-center rounded-full border border-border/50 bg-card/80 text-text-secondary backdrop-blur-xl transition-colors md:hidden;
+  }
+
+  .mobile-menu-btn:hover {
+    @apply border-accent/30 text-accent;
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    @apply pointer-events-auto fixed inset-x-4 top-20 rounded-2xl border border-border/50 bg-card/95 p-4 backdrop-blur-xl md:hidden;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+  }
+
+  .mobile-nav-list {
+    @apply flex flex-col gap-1;
+  }
+
+  .mobile-nav-link {
+    @apply block rounded-xl px-4 py-3 text-base font-medium text-text-secondary transition-colors;
+  }
+
+  .mobile-nav-link:hover {
+    @apply bg-card-hover text-text-primary;
+  }
+
+  .mobile-nav-link-active {
+    @apply bg-accent/10 text-accent;
+  }
+</style>

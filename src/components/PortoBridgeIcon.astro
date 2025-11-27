@@ -1,0 +1,45 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 100 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class:list={['porto-bridge', className]}
+>
+  <!-- Dom Luís I Bridge silhouette -->
+  <!-- Main arch -->
+  <path
+    d="M10 55 Q50 5 90 55"
+    stroke="currentColor"
+    stroke-width="3"
+    fill="none"
+  />
+  <!-- Upper deck -->
+  <line x1="20" y1="25" x2="80" y2="25" stroke="currentColor" stroke-width="2"/>
+  <!-- Lower deck -->
+  <line x1="5" y1="55" x2="95" y2="55" stroke="currentColor" stroke-width="2"/>
+  <!-- Vertical supports -->
+  <line x1="25" y1="25" x2="20" y2="55" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="40" y1="25" x2="35" y2="55" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="50" y1="18" x2="50" y2="55" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="60" y1="25" x2="65" y2="55" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="75" y1="25" x2="80" y2="55" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Cross bracing -->
+  <line x1="25" y1="35" x2="40" y2="45" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="40" y1="35" x2="25" y2="45" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="60" y1="35" x2="75" y2="45" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="75" y1="35" x2="60" y2="45" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+</svg>
+
+<style>
+  .porto-bridge {
+    @apply w-full h-auto;
+  }
+</style>
+

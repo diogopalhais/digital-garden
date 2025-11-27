@@ -1,0 +1,106 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'uses');
+const { Content } = await page.render();
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <section class="container-content py-16">
+    <header class="mb-12">
+      <p class="mb-2 text-xs font-medium uppercase tracking-wider text-accent">Setup & Tools</p>
+      <h1 class="mb-4 text-4xl font-bold text-text-primary md:text-5xl">
+        {page.data.title}
+      </h1>
+    </header>
+
+    <article class="prose-content prose-uses">
+      <Content />
+    </article>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  /* Base prose styling for all content pages */
+  .prose-content {
+    @apply max-w-none text-text-secondary;
+  }
+
+  .prose-content > p:first-of-type {
+    @apply text-lg leading-relaxed text-text-secondary/80 mb-10 pb-10 border-b border-border/30;
+  }
+
+  .prose-content h2 {
+    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b border-accent/30;
+  }
+
+  .prose-content h3 {
+    @apply text-xs font-medium text-text-muted mt-8 mb-3 uppercase tracking-widest pl-3 border-l-2 border-border;
+    letter-spacing: 0.1em;
+  }
+
+  .prose-content p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose-content a {
+    @apply text-accent hover:text-accent-hover transition-colors;
+  }
+
+  .prose-content strong {
+    @apply font-medium text-text-primary;
+  }
+
+  .prose-content em {
+    @apply not-italic text-sm text-text-muted;
+  }
+
+  .prose-content hr {
+    @apply border-border/30 my-10;
+  }
+
+  /* Uses page specific styling */
+  .prose-uses ul {
+    @apply space-y-0 list-none pl-0 mb-8;
+  }
+
+  .prose-uses li {
+    @apply flex items-baseline gap-3 py-3 border-b border-border/20 last:border-b-0;
+  }
+
+  .prose-uses li strong {
+    @apply font-medium text-text-primary;
+  }
+
+  .prose-uses li em {
+    @apply not-italic text-xs text-text-muted ml-auto shrink-0;
+  }
+
+  /* Items without em (description) */
+  .prose-uses li:not(:has(em)) {
+    @apply text-text-secondary;
+  }
+
+  .prose-uses li:not(:has(strong)) {
+    @apply text-text-primary text-sm;
+  }
+
+  /* Image card styling - consistent with homepage bento cards */
+  .prose-uses p:has(img) {
+    @apply rounded-2xl border border-border overflow-hidden my-8 transition-all duration-300;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+  }
+
+  .prose-uses p:has(img):hover {
+    @apply border-border-hover;
+  }
+
+  .prose-uses img {
+    @apply w-full block transition-transform duration-700;
+  }
+
+  .prose-uses p:has(img):hover img {
+    transform: scale(1.05);
+  }
+</style>

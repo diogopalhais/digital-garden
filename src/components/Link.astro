@@ -1,0 +1,35 @@
+---
+export interface Props {
+  href: string;
+  variant?: 'default' | 'underline';
+  external?: boolean;
+  class?: string;
+}
+
+const { href, variant = 'default', external = false, class: className = '' } = Astro.props;
+
+const externalProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a
+  href={href}
+  class:list={[
+    'link',
+    variant === 'underline' && 'link-underline',
+    className,
+  ]}
+  {...externalProps}
+>
+  <slot />
+</a>
+
+<style>
+  .link {
+    @apply text-accent transition-colors duration-200 hover:text-accent-hover;
+  }
+
+  .link-underline {
+    @apply text-accent border-b border-accent/50 transition-all duration-200 hover:border-accent-hover hover:text-accent-hover;
+  }
+</style>
+

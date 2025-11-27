@@ -1,0 +1,96 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Badge from '@components/Badge.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'now');
+const { Content } = await page.render();
+
+const updated = page.data.updated || 'Recently';
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <section class="container-content py-16">
+    <header class="mb-12">
+      <div class="mb-2 flex items-center gap-3">
+        <p class="text-xs font-medium uppercase tracking-wider text-accent">What I'm up to</p>
+        <Badge variant="accent">Updated {updated}</Badge>
+      </div>
+      <h1 class="mb-4 text-4xl font-bold text-text-primary md:text-5xl">
+        {page.data.title}
+      </h1>
+    </header>
+
+    <article class="prose-now">
+      <Content />
+    </article>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-now {
+    @apply max-w-none text-text-secondary;
+  }
+
+  .prose-now > p:first-of-type {
+    @apply text-lg leading-relaxed text-text-secondary/80 mb-10 pb-10 border-b border-border/30;
+  }
+
+  .prose-now h2 {
+    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b border-accent/30;
+  }
+
+  .prose-now h3 {
+    @apply text-xs font-medium text-text-muted mt-8 mb-3 uppercase tracking-widest pl-3 border-l-2 border-border;
+    letter-spacing: 0.1em;
+  }
+
+  .prose-now p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose-now strong {
+    @apply text-text-primary font-medium;
+  }
+
+  .prose-now ul {
+    @apply space-y-2 list-none pl-0 mb-6;
+  }
+
+  .prose-now li {
+    @apply relative pl-4 text-text-secondary;
+  }
+
+  .prose-now li::before {
+    @apply content-[''] absolute left-0 top-[0.6em] h-1 w-1 rounded-full bg-accent;
+  }
+
+  /* Task list styling */
+  .prose-now li:has(input[type="checkbox"]) {
+    @apply pl-0;
+  }
+
+  .prose-now li:has(input[type="checkbox"])::before {
+    @apply content-none;
+  }
+
+  .prose-now input[type="checkbox"] {
+    @apply hidden;
+  }
+
+  .prose-now li:has(input[type="checkbox"]:checked)::before {
+    @apply content-['✓'] absolute left-0 top-0 h-auto w-auto rounded-none bg-transparent text-accent font-mono text-sm;
+  }
+
+  .prose-now li:has(input[type="checkbox"]:not(:checked))::before {
+    @apply content-['○'] absolute left-0 top-0 h-auto w-auto rounded-none bg-transparent text-text-muted/40 font-mono text-sm;
+  }
+
+  .prose-now a {
+    @apply text-accent hover:text-accent-hover transition-colors;
+  }
+
+  .prose-now hr {
+    @apply border-border/30 my-10;
+  }
+</style>

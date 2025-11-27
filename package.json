@@ -1,0 +1,37 @@
+{
+  "name": "digital-garden",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A digital garden personal webpage",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^3.1.0",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^4.16.0",
+    "motion": "^10.18.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-fast-marquee": "^1.6.5",
+    "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "express": "^5.1.0",
+    "prettier": "^3.3.0",
+    "prettier-plugin-astro": "^0.14.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
+    "typescript": "^5.6.0"
+  }
+}

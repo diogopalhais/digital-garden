@@ -1,0 +1,128 @@
+---
+export interface Props {
+  images?: { src: string; alt: string }[];
+}
+
+const { images = [] } = Astro.props;
+
+// Placeholder images if none provided
+const photos = images.length > 0 ? images : [
+  { src: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&h=300&fit=crop', alt: 'Porto riverside' },
+  { src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop', alt: 'Code on screen' },
+  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop', alt: 'Mountains' },
+  { src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop', alt: 'Laptop setup' },
+  { src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=300&fit=crop', alt: 'Coffee shop' },
+];
+---
+
+<div class="carousel-container">
+  <div class="carousel-header">
+    <div class="camera-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+        <circle cx="12" cy="13" r="3"/>
+      </svg>
+    </div>
+    <span class="carousel-title">Camera Roll</span>
+  </div>
+  
+  <div class="carousel-track" id="carousel">
+    {photos.map((photo, index) => (
+      <div class="carousel-slide" style={`animation-delay: ${index * 0.1}s`}>
+        <img src={photo.src} alt={photo.alt} loading="lazy" />
+      </div>
+    ))}
+  </div>
+  
+  <div class="carousel-dots">
+    {photos.map((_, index) => (
+      <button class="dot" data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  const carousel = document.getElementById('carousel');
+  const dots = document.querySelectorAll('.dot');
+  let currentIndex = 0;
+  
+  function updateCarousel() {
+    if (carousel) {
+      const slideWidth = carousel.querySelector('.carousel-slide')?.offsetWidth || 0;
+      carousel.style.transform = `translateX(-${currentIndex * (slideWidth + 12)}px)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+  }
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentIndex = index;
+      updateCarousel();
+    });
+  });
+  
+  // Auto-advance
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % dots.length;
+    updateCarousel();
+  }, 4000);
+  
+  // Initialize
+  updateCarousel();
+</script>
+
+<style>
+  .carousel-container {
+    @apply h-full flex flex-col;
+  }
+  
+  .carousel-header {
+    @apply flex items-center gap-2 mb-4;
+  }
+  
+  .camera-icon {
+    @apply flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10 text-accent;
+  }
+  
+  .carousel-title {
+    @apply text-sm font-medium text-text-secondary;
+  }
+  
+  .carousel-track {
+    @apply flex gap-3 transition-transform duration-500 ease-out flex-1;
+    overflow: visible;
+  }
+  
+  .carousel-slide {
+    @apply flex-shrink-0 w-full rounded-xl overflow-hidden;
+    aspect-ratio: 4/3;
+  }
+  
+  .carousel-slide img {
+    @apply w-full h-full object-cover transition-transform duration-300;
+  }
+  
+  .carousel-slide:hover img {
+    @apply scale-105;
+  }
+  
+  .carousel-dots {
+    @apply flex justify-center gap-2 mt-4;
+  }
+  
+  .dot {
+    @apply w-2 h-2 rounded-full bg-border transition-all duration-300;
+  }
+  
+  .dot:hover {
+    @apply bg-text-muted;
+  }
+  
+  .dot.active {
+    @apply bg-accent w-6;
+  }
+</style>
+

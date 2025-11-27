@@ -1,0 +1,9 @@
+name = "spotify-now-playing"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Required secrets (set via wrangler secret put):
+# - SPOTIFY_CLIENT_ID
+# - SPOTIFY_CLIENT_SECRET
+# - SPOTIFY_REFRESH_TOKEN
+
