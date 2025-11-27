@@ -2,6 +2,7 @@
   "name": "digital-garden",
   "type": "module",
   "version": "1.0.0",
+  "packageManager": "pnpm@9.15.0",
   "description": "A digital garden personal webpage",
   "scripts": {
     "dev": "astro dev",
