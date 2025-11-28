@@ -21,31 +21,6 @@ const techStack = [
   { name: "Tailwind", icon: "devicon-tailwindcss-original colored" },
 ];
 
-const itemStyle = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  gap: "0.75rem",
-  padding: "0.75rem 1rem",
-  borderRadius: "0.75rem",
-  backgroundColor: "rgba(24, 24, 27, 0.5)",
-  border: "1px solid rgba(39, 39, 42, 0.5)",
-  minWidth: "100px",
-  marginRight: "1.5rem",
-  transition: "all 0.3s ease",
-};
-
-const iconStyle = {
-  fontSize: "2.5rem",
-  lineHeight: 1,
-};
-
-const labelStyle = {
-  fontSize: "0.75rem",
-  fontWeight: 500,
-  color: "rgba(161, 161, 170, 1)",
-  whiteSpace: "nowrap",
-};
 
 export default function TechStackMarquee() {
   return (
@@ -57,9 +32,14 @@ export default function TechStackMarquee() {
       pauseOnHover={true}
     >
       {techStack.map((tech) => (
-        <div key={tech.name} style={itemStyle}>
-          <i className={tech.icon} style={iconStyle}></i>
-          <span style={labelStyle}>{tech.name}</span>
+        <div
+          key={tech.name}
+          className="flex flex-col items-center gap-2 md:gap-3 px-3 md:px-5 mr-2 md:mr-4"
+        >
+          <i className={`${tech.icon} text-2xl md:text-4xl leading-none`}></i>
+          <span className="text-[10px] md:text-xs font-medium text-[rgba(161,161,170,1)] whitespace-nowrap">
+            {tech.name}
+          </span>
         </div>
       ))}
     </Marquee>

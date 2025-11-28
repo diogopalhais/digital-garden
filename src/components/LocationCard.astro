@@ -1,0 +1,87 @@
+---
+interface Props {
+  location?: string;
+  timezone?: string;
+  mapImage?: string;
+}
+
+const { 
+  location = "Porto, Portugal",
+  timezone = "Europe/Lisbon",
+  mapImage = "/images/map.png"
+} = Astro.props;
+---
+
+<div class="location-card group">
+  <div class="relative h-full">
+    <!-- Map Background Image -->
+    <div class="absolute inset-0 overflow-hidden">
+      <img 
+        src={mapImage}
+        alt={`Map showing ${location}`}
+        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+    </div>
+    
+    <!-- Warm overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-accent/10 via-black/30 to-orange/10"></div>
+    
+    <!-- Vignette -->
+    <div class="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.6)]"></div>
+    
+    <!-- Content - Glass card -->
+    <div class="absolute top-2 left-2 right-2 lg:top-4 lg:left-4 lg:right-4 z-10">
+      <div class="glass-card rounded-xl p-2 lg:p-4">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-1 lg:gap-4">
+          <div>
+            <p class="text-[8px] lg:text-[10px] uppercase tracking-wider text-cream/50 mb-0.5 lg:mb-1">Working remote from</p>
+            <h3 class="text-base lg:text-xl font-bold text-cream">{location}</h3>
+          </div>
+          <div class="lg:text-right">
+            <p class="text-[8px] lg:text-[10px] uppercase tracking-wider text-cream/40 mb-0.5 lg:mb-1">Local Time</p>
+            <p class="font-mono text-lg lg:text-2xl font-bold text-cream" id="local-time" data-timezone={timezone}>--:--</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateTime() {
+    const timeEl = document.getElementById('local-time');
+    if (timeEl) {
+      const timezone = timeEl.dataset.timezone || 'Europe/Lisbon';
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false,
+        timeZone: timezone
+      };
+      timeEl.textContent = now.toLocaleTimeString('en-GB', options);
+    }
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
+
+<style>
+  .location-card {
+    @apply h-full min-h-[180px] lg:min-h-[240px] overflow-hidden p-0 rounded-2xl border border-border bg-card transition-all duration-300;
+  }
+
+  .location-card:hover {
+    @apply border-border-hover;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-card {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(248, 237, 217, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+</style>
+

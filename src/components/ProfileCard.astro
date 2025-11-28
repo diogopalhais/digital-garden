@@ -1,0 +1,45 @@
+---
+interface Props {
+  name?: string;
+  title?: string;
+  image?: string;
+}
+
+const { 
+  name = "Diogo Palhais", 
+  title = "Senior Software Engineer",
+  image = "/images/profile.png"
+} = Astro.props;
+---
+
+<div class="profile-card group">
+  <div class="relative h-full">
+    <img 
+      src={image}
+      alt={`${name} - ${title}`}
+      class="h-full w-full object-cover object-top transition-all duration-700 group-hover:scale-105 brightness-50"
+    />
+    <!-- Warm overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-tomato/10 mix-blend-overlay"></div>
+    <!-- Bottom gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+    <!-- Content -->
+    <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6">
+      <h2 class="text-sm lg:text-lg font-bold text-text-primary">{name}</h2>
+      <p class="text-xs lg:text-sm text-text-secondary">{title}</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .profile-card {
+    @apply h-full min-h-[180px] lg:min-h-[240px] overflow-hidden p-0 rounded-2xl border border-border bg-card transition-all duration-300;
+  }
+
+  .profile-card:hover {
+    @apply border-border-hover;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+  }
+</style>
+

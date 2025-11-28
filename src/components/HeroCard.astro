@@ -1,0 +1,145 @@
+---
+import StatusBadge from './StatusBadge.astro';
+
+interface Props {
+  statusText?: string;
+  headline?: string;
+  highlightedWord?: string;
+  description?: string;
+  currentRole?: string;
+  companyName?: string;
+  companyUrl?: string;
+  companyLogo?: string;
+  companyColor?: string;
+  companyDescription?: string;
+  companyTags?: string[];
+  companyLocation?: string;
+}
+
+const {
+  statusText = "Available for projects",
+  headline = "Building digital",
+  highlightedWord = "experiences",
+  description = "I'm Diogo, a Senior Software Engineer with over a decade of experience in full-stack and blockchain development.",
+  currentRole = "Senior Software Engineer",
+  companyName = "Applied Blockchain",
+  companyUrl = "https://www.appliedblockchain.com/",
+  companyLogo = "/images/applied-blockchain-logo.jpg",
+  companyColor = "#2563EB",
+  companyDescription = "Building enterprise blockchain solutions for global companies like Shell, KLM, Vodafone, and Bank of America. Specializing in Web3, DeFi, and privacy-focused technologies.",
+  companyTags = ["Web3", "DeFi", "Smart Contracts"],
+  companyLocation = "London, UK • Founded 2015"
+} = Astro.props;
+---
+
+<div class="hero-card h-full min-h-[400px] lg:min-h-[500px]">
+  <div class="flex h-full flex-col justify-between p-8 lg:p-12">
+    <div>
+      <!-- Status badge -->
+      <div class="mb-8">
+        <StatusBadge text={statusText} />
+      </div>
+      
+      <!-- Main heading -->
+      <h1 class="mb-6 text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-6xl">
+        {headline}<br/>
+        <span class="hero-gradient">{highlightedWord}</span>
+      </h1>
+      
+      <p class="max-w-xl text-lg leading-relaxed text-text-secondary lg:text-xl">
+        {description}
+      </p>
+    </div>
+    
+    <!-- Currently Working Section -->
+    <div class="mt-8">
+      <p class="mb-3 text-xs font-medium uppercase tracking-wider text-text-muted">Currently</p>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span class="text-sm font-medium text-text-primary">{currentRole}</span>
+        <span class="text-sm text-text-muted">@</span>
+        <div class="company-link-wrapper relative">
+          <a 
+            href={companyUrl}
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="company-link inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm font-medium transition-all"
+            style={`border-color: ${companyColor}30; background-color: ${companyColor}10; color: ${companyColor};`}
+          >
+            <img 
+              src={companyLogo}
+              alt=""
+              class="h-4 w-4 rounded object-contain"
+            />
+            {companyName}
+            <svg class="h-3 w-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+          
+          <!-- Hover Popup -->
+          <div class="company-popup absolute left-0 top-full z-50 mt-3 w-80 opacity-0 invisible transition-all duration-200 translate-y-2">
+            <div class="rounded-xl border border-border bg-card p-4 shadow-2xl shadow-black/40">
+              <div class="flex items-start gap-4">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl overflow-hidden">
+                  <img 
+                    src={companyLogo}
+                    alt={companyName}
+                    class="h-12 w-12 object-contain"
+                  />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-bold text-text-primary">{companyName}</h4>
+                  <p class="mt-0.5 text-xs text-text-muted">{companyLocation}</p>
+                </div>
+              </div>
+              
+              <p class="mt-3 text-sm leading-relaxed text-text-secondary">
+                {companyDescription}
+              </p>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                {companyTags.map((tag) => (
+                  <span 
+                    class="rounded-full px-2 py-0.5 text-xs"
+                    style={`background-color: ${companyColor}10; color: ${companyColor};`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <!-- Arrow -->
+              <div class="absolute -top-2 left-6 h-4 w-4 rotate-45 border-l border-t border-border bg-card"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .hero-card {
+    @apply rounded-3xl border border-border/50 bg-card;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, #80D580 0%, #FFA54E 50%, #FF5F43 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .company-link-wrapper:hover .company-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .company-link {
+    position: relative;
+  }
+
+  .company-link:hover {
+    filter: brightness(1.1);
+  }
+</style>
+
