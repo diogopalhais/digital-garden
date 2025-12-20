@@ -17,13 +17,8 @@ const {
     <img 
       src={image}
       alt={`${name} - ${title}`}
-      class="h-full w-full object-cover object-top transition-all duration-700 group-hover:scale-105 brightness-50"
+      class="h-full w-full object-cover object-top transition-all duration-900 group-hover:scale-105 brightness-80"
     />
-    <!-- Warm overlay -->
-    <div class="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-tomato/10 mix-blend-overlay"></div>
-    <!-- Bottom gradient -->
-    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
-    <!-- Content -->
     <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6">
       <h2 class="text-sm lg:text-lg font-bold text-text-primary">{name}</h2>
       <p class="text-xs lg:text-sm text-text-secondary">{title}</p>
