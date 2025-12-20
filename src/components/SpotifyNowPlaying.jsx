@@ -43,9 +43,9 @@ export default function SpotifyNowPlaying() {
     return (
       <div className="p-6 pt-2">
         <div className="flex items-center gap-5">
-          <div className="relative flex h-20 w-20 items-center justify-center rounded-xl bg-gradient-to-br from-[#1DB954]/20 to-[#1DB954]/5 border border-[#1DB954]/20">
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-xl bg-linear-to-br from-[#1DB954]/20 to-[#1DB954]/5 border border-[#1DB954]/20">
             <SpotifyIcon className="h-8 w-8 text-[#1DB954]/60" />
-            <div className="absolute -inset-px rounded-xl bg-gradient-to-br from-[#1DB954]/10 to-transparent opacity-50" />
+            <div className="absolute -inset-px rounded-xl bg-linear-to-br from-[#1DB954]/10 to-transparent opacity-50" />
           </div>
           <div className="flex-1">
             <p className="text-base font-semibold text-text-primary">Nothing playing</p>
