@@ -1,0 +1,242 @@
+---
+import Card from './Card.astro';
+import CursorImagePreview from './CursorImagePreview.jsx';
+import { projects as defaultProjects, type Project } from '../data/projects';
+
+interface Props {
+  title?: string;
+  projects?: Project[];
+}
+
+const { 
+  title = "Featured Projects",
+  projects = defaultProjects
+} = Astro.props;
+---
+
+<Card class="projects-card">
+  <div class="py-4">
+    <!-- Header -->
+    <div class="pt-2 pb-4 flex items-center justify-between">
+      <h3 class="text-sm font-medium uppercase tracking-wider text-text-secondary/70">{title}</h3>
+      <span class="hover-hint text-xs text-text-muted/40 flex items-center gap-1.5">
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+        hover to preview
+      </span>
+    </div>
+    
+    <!-- Projects List -->
+    <ul class="projects-list">
+      {projects.map((project: Project, index: number) => (
+        <li 
+          class="project-item"
+          data-image={project.image}
+          data-name={project.name}
+          style={`--delay: ${index * 0.05}s`}
+          tabindex="0"
+        >
+          <div class="project-content">
+            <div class="project-main">
+              <span class="project-index">{String(index + 1).padStart(2, '0')}</span>
+              <div class="project-info">
+                <div class="project-name-row">
+                  {project.url ? (
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-name project-link">
+                      {project.name}
+                      <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                      </svg>
+                    </a>
+                  ) : (
+                    <h3 class="project-name">{project.name}</h3>
+                  )}
+                </div>
+                <div class="project-meta">
+                  <span class="project-type">{project.type}</span>
+                  {(project.company || project.role) && (
+                    <>
+                      <span class="project-divider">•</span>
+                      {project.company ? (
+                        <span class="project-company">@ {project.company}</span>
+                      ) : (
+                        <span class="project-role">{project.role}</span>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div class="project-right">
+              {project.sunset && (
+                <span class="sunset-badge">sunset</span>
+              )}
+              {project.year && (
+                <span class="project-year">{project.year}</span>
+              )}
+            </div>
+          </div>
+          <div class="project-line"></div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Card>
+
+<!-- Cursor-following image preview -->
+<CursorImagePreview 
+  client:load 
+  targetSelector=".project-item"
+  width={360}
+  height={240}
+  offsetX={50}
+  offsetY={0}
+/>
+
+<style>
+  @reference "../styles/global.css";
+
+  /* Hide hover hint on touch devices */
+  @media (hover: none) {
+    .hover-hint {
+      display: none;
+    }
+  }
+
+  .projects-list {
+    @apply flex flex-col;
+  }
+
+  .project-item {
+    @apply relative outline-none;
+    animation: fadeSlideIn 0.5s ease-out backwards;
+    animation-delay: var(--delay);
+  }
+
+  /* Focus styles for keyboard navigation */
+  .project-item:focus-visible {
+    @apply outline-none;
+  }
+
+  .project-item:focus-visible .project-name {
+    color: var(--color-accent);
+  }
+
+  .project-item:focus-visible .project-index,
+  .project-item:focus-visible .project-meta,
+  .project-item:focus-visible .project-year {
+    color: var(--color-text-muted);
+  }
+
+  .project-item:focus-visible .project-line {
+    background-color: var(--color-accent);
+  }
+
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .project-content {
+    @apply flex items-center justify-between py-4 transition-all duration-300;
+  }
+
+  .project-main {
+    @apply flex items-center gap-4;
+  }
+
+  .project-index {
+    @apply font-mono text-xs text-text-muted/50 transition-colors duration-200;
+    min-width: 1.5rem;
+  }
+
+  .project-item:hover .project-index {
+    color: var(--color-text-muted);
+  }
+
+  .project-info {
+    @apply flex flex-col gap-0.5;
+  }
+
+  .project-name-row {
+    @apply flex items-center;
+  }
+
+  .project-name {
+    @apply text-base font-medium text-text-primary transition-colors duration-200;
+  }
+
+  .project-link {
+    @apply flex items-center gap-1.5 no-underline cursor-pointer;
+  }
+
+  .project-link:hover {
+    color: var(--color-accent);
+  }
+
+  .link-icon {
+    @apply w-3.5 h-3.5 opacity-40 transition-all duration-200;
+  }
+
+  .project-link:hover .link-icon {
+    @apply opacity-100 translate-x-0.5 -translate-y-0.5;
+  }
+
+  .project-meta {
+    @apply flex items-center gap-2 text-sm text-text-muted/70;
+  }
+
+  .project-type {
+    @apply transition-colors duration-200;
+  }
+
+  .project-divider {
+    @apply text-text-muted/40;
+  }
+
+  .project-company,
+  .project-role {
+    @apply transition-colors duration-200;
+  }
+
+  .project-item:hover .project-meta {
+    color: var(--color-text-muted);
+  }
+
+  .project-right {
+    @apply flex items-center gap-3;
+  }
+
+  .project-year {
+    @apply font-mono text-xs text-text-muted/50 transition-colors duration-200;
+  }
+
+  .project-item:hover .project-year {
+    color: var(--color-text-muted);
+  }
+
+  .sunset-badge {
+    @apply text-xs text-accent/50;
+  }
+
+  .project-line {
+    @apply absolute bottom-0 left-0 h-px w-full bg-border/50;
+    transition: background-color 0.2s ease;
+  }
+
+  .project-item:hover .project-line {
+    background-color: var(--color-border);
+  }
+
+  .project-item:last-child .project-line {
+    display: none;
+  }
+</style>

@@ -6,6 +6,7 @@ import LocationCard from '@components/LocationCard.astro';
 import TechStackCard from '@components/TechStackCard.astro';
 import SpotifyCard from '@components/SpotifyCard.astro';
 import SocialLinks from '@components/SocialLinks.astro';
+import ProjectsCard from '@components/ProjectsCard.astro';
 ---
 
 <BaseLayout
@@ -37,7 +38,12 @@ import SocialLinks from '@components/SocialLinks.astro';
         <TechStackCard />
       </div>
         
-      <!-- Row 3: Spotify & Connect -->
+      <!-- Row 3: Projects -->
+      <div class="mt-4">
+        <ProjectsCard />
+      </div>
+      
+      <!-- Row 4: Spotify & Connect -->
       <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <SpotifyCard />
         <SocialLinks />
