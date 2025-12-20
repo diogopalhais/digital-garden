@@ -1,4 +1,6 @@
 ---
+import Card from './Card.astro';
+
 export interface Props {
   size?: 'sm' | 'wide' | 'tall' | 'lg';
   href?: string;
@@ -7,77 +9,14 @@ export interface Props {
 }
 
 const { size = 'sm', href, class: className = '', gradient = false } = Astro.props;
-
-const sizeClasses = {
-  sm: '',
-  wide: 'sm:col-span-2',
-  tall: 'sm:row-span-2',
-  lg: 'sm:col-span-2 sm:row-span-2',
-};
-
-const Element = href ? 'a' : 'div';
 ---
 
-<Element
-  href={href}
-  class:list={[
-    'bento-card',
-    gradient && 'gradient-border',
-    sizeClasses[size],
-    href && 'cursor-pointer',
-    className,
-  ]}
+<Card 
+  variant="default" 
+  size={size} 
+  href={href} 
+  class={className} 
+  gradient={gradient}
 >
   <slot />
-</Element>
-
-<style>
-  @reference "../styles/global.css";
-
-  .bento-card {
-    @apply relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300;
-  }
-
-  .bento-card::before {
-    content: '';
-    @apply pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(16, 185, 129, 0.06),
-      transparent 40%
-    );
-  }
-
-  .bento-card:hover {
-    @apply border-border-hover bg-card-hover;
-    transform: translateY(-2px);
-    box-shadow: 
-      0 0 0 1px rgba(16, 185, 129, 0.1),
-      0 4px 20px rgba(0, 0, 0, 0.3),
-      0 0 40px rgba(16, 185, 129, 0.05);
-  }
-
-  .bento-card:hover::before {
-    @apply opacity-100;
-  }
-
-  .gradient-border {
-    @apply relative;
-  }
-
-  .gradient-border::after {
-    content: '';
-    @apply absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 -z-10;
-    background: linear-gradient(
-      135deg,
-      rgba(16, 185, 129, 0.3),
-      rgba(16, 185, 129, 0.1),
-      transparent,
-      rgba(16, 185, 129, 0.1)
-    );
-  }
-
-  .gradient-border:hover::after {
-    @apply opacity-100;
-  }
-</style>
+</Card>

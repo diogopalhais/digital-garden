@@ -1,0 +1,97 @@
+---
+export interface Props {
+  /**
+   * Visual style variant
+   * - default: Standard card with hover effect
+   * - hero: Large hero card with subtle border
+   * - media: No padding, full-bleed content (images/maps)
+   * - spotify: Green gradient accent
+   */
+  variant?: 'default' | 'hero' | 'media' | 'spotify';
+  
+  /**
+   * Grid size (for bento layouts)
+   */
+  size?: 'sm' | 'wide' | 'tall' | 'lg';
+  
+  /**
+   * Whether to render as a link
+   */
+  href?: string;
+  
+  /**
+   * Additional classes
+   */
+  class?: string;
+  
+  /**
+   * Enable gradient border effect on hover
+   */
+  gradient?: boolean;
+}
+
+const { 
+  variant = 'default', 
+  href, 
+  class: className = '', 
+  gradient = false
+} = Astro.props;
+
+const size: 'sm' | 'wide' | 'tall' | 'lg' = Astro.props.size ?? 'sm';
+
+const sizeClasses: Record<'sm' | 'wide' | 'tall' | 'lg', string> = {
+  sm: '',
+  wide: 'sm:col-span-2',
+  tall: 'sm:row-span-2',
+  lg: 'sm:col-span-2 sm:row-span-2',
+};
+
+const Element = href ? 'a' : 'div';
+---
+
+<Element
+  href={href}
+  class:list={[
+    'card',
+    variant !== 'default' && `card--${variant}`,
+    gradient && 'card--gradient',
+    sizeClasses[size],
+    href && 'cursor-pointer',
+    className,
+  ]}
+>
+  <slot />
+</Element>
+
+<style>
+  @reference "../styles/global.css";
+
+  .card {
+    @apply relative overflow-hidden px-8 py-4 rounded-xs border border-border bg-card transition-all duration-300 hover:-translate-y-px hover:border-border-hover hover:bg-card-hover;
+  }
+
+  .card--hero {
+    @apply overflow-visible z-10;
+  }
+
+  .card--media {
+    @apply px-0 py-0;
+  }
+
+  .card--gradient::after {
+    content: '';
+    @apply absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 -z-10;
+    background: linear-gradient(
+      135deg,
+      rgba(16, 185, 129, 0.3),
+      rgba(16, 185, 129, 0.1),
+      transparent,
+      rgba(16, 185, 129, 0.1)
+    );
+  }
+
+  .card--gradient:hover::after {
+    @apply opacity-100;
+  }
+</style>
+

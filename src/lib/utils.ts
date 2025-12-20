@@ -1,5 +1,3 @@
-import type { CollectionEntry } from 'astro:content';
-
 /**
  * Format a date to a readable string
  */
@@ -19,15 +17,6 @@ export function formatDateShort(date: Date): string {
     year: 'numeric',
     month: 'short',
   }).format(date);
-}
-
-/**
- * Sort projects by date (newest first)
- */
-export function sortProjectsByDate(
-  projects: CollectionEntry<'projects'>[]
-): CollectionEntry<'projects'>[] {
-  return projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
 /**

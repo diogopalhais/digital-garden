@@ -1,4 +1,6 @@
 ---
+import Card from './Card.astro';
+
 interface SocialLink {
   href: string;
   label: string;
@@ -21,9 +23,8 @@ const defaultLinks: SocialLink[] = [
 const { username = "diogopalhais", links = defaultLinks } = Astro.props;
 ---
 
-<div class="social-card group/connect">
-  <div class="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover/connect:opacity-100"></div>
-  <div class="relative flex h-full flex-col items-center justify-center gap-3 p-4">
+<Card variant="default" class="group/connect">
+  <div class="relative flex h-full flex-col items-center justify-center gap-3">
     <p class="text-xs text-text-muted">Find me on the web <span class="text-accent">@{username}</span></p>
     <div class="flex items-center gap-4">
       {links.map((link) => (
@@ -63,20 +64,10 @@ const { username = "diogopalhais", links = defaultLinks } = Astro.props;
       ))}
     </div>
   </div>
-</div>
+</Card>
 
 <style>
   @reference "../styles/global.css";
-
-  .social-card {
-    @apply relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300;
-  }
-
-  .social-card:hover {
-    @apply border-border-hover;
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
-  }
 
   .social-icon {
     @apply flex h-10 w-10 items-center justify-center rounded-full text-text-muted transition-all duration-300;

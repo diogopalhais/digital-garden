@@ -58,30 +58,11 @@ export function initScrollAnimations(): void {
 }
 
 /**
- * Card mouse tracking for glow effect
- */
-export function initCardGlow(): void {
-  const cards = document.querySelectorAll('.bento-card');
-
-  cards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = (card as HTMLElement).getBoundingClientRect();
-      const x = ((e as MouseEvent).clientX - rect.left) / rect.width * 100;
-      const y = ((e as MouseEvent).clientY - rect.top) / rect.height * 100;
-      
-      (card as HTMLElement).style.setProperty('--mouse-x', `${x}%`);
-      (card as HTMLElement).style.setProperty('--mouse-y', `${y}%`);
-    });
-  });
-}
-
-/**
  * Initialize all animations
  */
 export function initAnimations(): void {
   initBentoAnimations();
   initScrollAnimations();
-  initCardGlow();
 }
 
 

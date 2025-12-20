@@ -1,6 +1,5 @@
 import FastMarquee from "react-fast-marquee";
 
-// Handle both ESM and CJS default exports
 const Marquee = FastMarquee.default || FastMarquee;
 
 const techStack = [
@@ -26,7 +25,7 @@ export default function TechStackMarquee() {
   return (
     <Marquee
       gradient={true}
-      gradientColor="#0c0c0e"
+      gradientColor="#0a0a0a"
       gradientWidth={80}
       speed={30}
       pauseOnHover={true}

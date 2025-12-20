@@ -12,7 +12,7 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 py-6">
+<header class="py-6">
   <nav class="flex justify-center">
     <ul class="nav-container">
       {navItems.map((item) => {
@@ -27,7 +27,7 @@ const currentPath = Astro.url.pathname;
                 isActive && 'nav-link-active',
               ]}
             >
-              <span class="nav-slash">/</span>{item.label}
+              <span class="nav-slash">/</span><span class="nav-label" data-text={item.label}>{item.label}</span>
             </a>
           </li>
         );
@@ -98,32 +98,24 @@ const currentPath = Astro.url.pathname;
 <style>
   @reference "../styles/global.css";
 
-  header {
-    @apply pointer-events-none;
-  }
-
   .nav-container {
-    @apply pointer-events-auto hidden md:flex items-center gap-1 rounded-full border px-2 py-2 backdrop-blur-xl;
-    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
-    background-color: color-mix(in srgb, var(--color-card) 80%, transparent);
-    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.2);
+    @apply hidden md:flex items-center gap-6;
   }
 
   .nav-link {
-    @apply relative px-4 py-2 text-sm font-medium text-text-secondary transition-all duration-200 rounded-full;
+    @apply relative px-1 py-2 text-sm font-medium text-text-secondary transition-all duration-200;
   }
 
   .nav-link:hover {
-    @apply text-text-primary;
+    @apply text-text-primary -translate-y-20;
   }
 
   .nav-link-active {
-    @apply text-accent;
-    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    @apply text-text-primary font-bold transition-all duration-400;
   }
 
   .nav-slash {
-    @apply text-accent opacity-0 transition-opacity duration-200;
+    @apply text-accent font-semibold text-lg opacity-0 transition-all duration-400 pr-1;
   }
 
   .nav-link:hover .nav-slash,
@@ -131,40 +123,47 @@ const currentPath = Astro.url.pathname;
     @apply opacity-100;
   }
 
+  .nav-label {
+    @apply transition-all duration-200;
+  }
+
+  /* Reserve space for bold text to prevent layout shift */
+  .nav-label::after {
+    content: attr(data-text);
+    @apply block h-0 overflow-hidden font-bold invisible;
+  }
+
+  .nav-link:hover .nav-label {
+    @apply underline underline-offset-4;
+  }
+
   /* Mobile Menu Button */
   .mobile-menu-btn {
-    @apply pointer-events-auto fixed top-6 right-6 flex h-12 w-12 items-center justify-center rounded-full border text-text-secondary backdrop-blur-xl transition-colors md:hidden;
-    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
-    background-color: color-mix(in srgb, var(--color-card) 80%, transparent);
+    @apply absolute top-0 right-6 flex h-10 w-10 items-center justify-center text-text-secondary transition-all duration-200 md:hidden;
   }
 
   .mobile-menu-btn:hover {
-    @apply text-accent;
-    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+    @apply text-accent -translate-y-0.5;
   }
 
   /* Mobile Menu */
   .mobile-menu {
-    @apply pointer-events-auto fixed inset-x-4 top-20 rounded-2xl border p-4 backdrop-blur-xl md:hidden;
-    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
-    background-color: color-mix(in srgb, var(--color-card) 95%, transparent);
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+    @apply absolute inset-x-4 top-14 rounded-xl border border-border bg-card p-4 md:hidden;
   }
 
   .mobile-nav-list {
-    @apply flex flex-col gap-1;
+    @apply flex flex-col gap-2;
   }
 
   .mobile-nav-link {
-    @apply block rounded-xl px-4 py-3 text-base font-medium text-text-secondary transition-colors;
+    @apply block px-2 py-2 text-base font-medium text-text-secondary transition-all duration-200;
   }
 
   .mobile-nav-link:hover {
-    @apply bg-card-hover text-text-primary;
+    @apply text-text-primary underline underline-offset-4;
   }
 
   .mobile-nav-link-active {
-    @apply text-accent;
-    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    @apply text-text-primary font-bold;
   }
 </style>

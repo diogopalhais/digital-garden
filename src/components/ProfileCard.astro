@@ -1,4 +1,6 @@
 ---
+import Card from './Card.astro';
+
 interface Props {
   name?: string;
   title?: string;
@@ -12,31 +14,17 @@ const {
 } = Astro.props;
 ---
 
-<div class="profile-card group">
+<Card variant="media" class="profile-card group h-full min-h-[180px] lg:min-h-[240px]">
   <div class="relative h-full">
     <img 
       src={image}
       alt={`${name} - ${title}`}
-      class="h-full w-full object-cover object-top transition-all duration-900 group-hover:scale-105 brightness-80"
+      class="h-full w-full object-cover object-top transition-all duration-500 group-hover:scale-102 brightness-80"
     />
     <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6">
       <h2 class="text-sm lg:text-lg font-bold text-text-primary">{name}</h2>
       <p class="text-xs lg:text-sm text-text-secondary">{title}</p>
     </div>
   </div>
-</div>
-
-<style>
-  @reference "../styles/global.css";
-
-  .profile-card {
-    @apply h-full min-h-[180px] lg:min-h-[240px] overflow-hidden p-0 rounded-2xl border border-border bg-card transition-all duration-300;
-  }
-
-  .profile-card:hover {
-    @apply border-border-hover;
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
-  }
-</style>
+</Card>
 

@@ -10,8 +10,8 @@
   --color-border-hover: #333333;
 
   /* Colors - Accent */
-  --color-accent: #80D580;
-  --color-accent-hover: #9DE09D;
+  --color-accent: oklch(0.670 0.185 55.0);
+  --color-accent-hover: oklch(0.73 0.185 55.0);
 
   /* Colors - Palette (for special UI elements) */
   --color-cream: #F8EDD9;
