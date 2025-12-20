@@ -66,6 +66,8 @@ const { username = "diogopalhais", links = defaultLinks } = Astro.props;
 </div>
 
 <style>
+  @reference "../styles/global.css";
+
   .social-card {
     @apply relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300;
   }
@@ -81,7 +83,8 @@ const { username = "diogopalhais", links = defaultLinks } = Astro.props;
   }
 
   .social-icon:hover {
-    @apply bg-accent/10 text-accent;
+    @apply text-accent;
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
     transform: scale(1.15);
   }
 </style>

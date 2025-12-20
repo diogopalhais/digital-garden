@@ -75,6 +75,8 @@ const photos = images.length > 0 ? images : [
 </script>
 
 <style>
+  @reference "../styles/global.css";
+
   .carousel-container {
     @apply h-full flex flex-col;
   }
@@ -84,7 +86,8 @@ const photos = images.length > 0 ? images : [
   }
   
   .camera-icon {
-    @apply flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10 text-accent;
+    @apply flex items-center justify-center w-8 h-8 rounded-lg text-accent;
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
   }
   
   .carousel-title {

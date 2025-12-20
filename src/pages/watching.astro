@@ -11,7 +11,7 @@ const updated = page.data.updated || 'Recently';
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <section class="container-content py-16">
+  <section class="mx-auto max-w-3xl px-4 sm:px-6 py-16">
     <header class="mb-12">
       <div class="mb-2 flex items-center gap-3">
         <p class="text-xs font-medium uppercase tracking-wider text-accent">Media Tracking</p>
@@ -31,12 +31,16 @@ const updated = page.data.updated || 'Recently';
 </BaseLayout>
 
 <style is:global>
+  @reference "../styles/global.css";
+
   .prose-watching {
     @apply max-w-none text-text-secondary;
   }
 
   .prose-watching > p:first-of-type {
-    @apply text-lg leading-relaxed text-text-secondary/80 mb-8 pb-8 border-b border-border/30;
+    @apply text-lg leading-relaxed mb-8 pb-8 border-b;
+    color: color-mix(in srgb, var(--color-text-secondary) 80%, transparent);
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
   }
 
   .prose-watching p {

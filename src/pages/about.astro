@@ -7,7 +7,7 @@ const { Content } = await page.render();
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <section class="container-content py-16">
+  <section class="mx-auto max-w-3xl px-4 sm:px-6 py-16">
     <header class="mb-12">
       <p class="mb-2 text-sm font-medium text-accent">About Me</p>
       <h1 class="mb-6 text-4xl font-bold text-text-primary md:text-5xl">
@@ -22,20 +22,26 @@ const { Content } = await page.render();
 </BaseLayout>
 
 <style is:global>
+  @reference "../styles/global.css";
+
   .prose-about {
     @apply max-w-none text-text-secondary;
   }
 
   .prose-about > p:first-of-type {
-    @apply text-lg leading-relaxed text-text-secondary/80 mb-10 pb-10 border-b border-border/30;
+    @apply text-lg leading-relaxed mb-10 pb-10 border-b;
+    color: color-mix(in srgb, var(--color-text-secondary) 80%, transparent);
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
   }
 
   .prose-about h2 {
-    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b border-accent/30;
+    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b;
+    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
   }
 
   .prose-about h3 {
-    @apply text-sm font-semibold text-text-primary mt-8 mb-2 pl-3 border-l-2 border-accent/50;
+    @apply text-sm font-semibold text-text-primary mt-8 mb-2 pl-3 border-l-2;
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
   }
 
   .prose-about p {
@@ -67,6 +73,7 @@ const { Content } = await page.render();
   }
 
   .prose-about hr {
-    @apply border-border/30 my-10;
+    @apply my-10;
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
   }
 </style>

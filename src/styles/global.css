@@ -1,9 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+/* ===== Theme Configuration ===== */
+@theme inline {
+  /* Colors - Base */
+  --color-background: #000000;
+  --color-card: #0a0a0a;
+  --color-card-hover: #111111;
+  --color-border: #262626;
+  --color-border-hover: #333333;
+
+  /* Colors - Accent */
+  --color-accent: #80D580;
+  --color-accent-hover: #9DE09D;
+
+  /* Colors - Palette (for special UI elements) */
+  --color-cream: #F8EDD9;
+
+  /* Colors - Text */
+  --color-text-primary: #F8EDD9;
+  --color-text-secondary: #c9c0b0;
+  --color-text-muted: #8a8279;
+
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ===== Base Styles ===== */
 @layer base {
-  /* Import fonts */
   @font-face {
     font-family: 'Inter';
     font-style: normal;
@@ -25,38 +49,41 @@
   }
 
   body {
-    @apply bg-background text-text-primary font-sans antialiased;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
-  /* Selection */
   ::selection {
-    @apply bg-accent/30 text-text-primary;
+    color: var(--color-text-primary);
+    background-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
   }
 
-  /* Scrollbar */
   ::-webkit-scrollbar {
-    @apply w-2;
+    width: 0.5rem;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-background;
+    background-color: var(--color-background);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-border rounded-full;
+    background-color: var(--color-border);
+    border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-border-hover;
+    background-color: var(--color-border-hover);
   }
 
-  /* Focus styles */
   :focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-accent);
   }
 
-  /* Reduce motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -68,35 +95,44 @@
   }
 }
 
-@layer utilities {
-  /* Animation delays for stagger effect */
-  .animation-delay-100 { animation-delay: 100ms; }
-  .animation-delay-200 { animation-delay: 200ms; }
-  .animation-delay-300 { animation-delay: 300ms; }
-  .animation-delay-400 { animation-delay: 400ms; }
-  .animation-delay-500 { animation-delay: 500ms; }
-  .animation-delay-600 { animation-delay: 600ms; }
-  .animation-delay-700 { animation-delay: 700ms; }
-
-  /* Text gradient utilities */
-  .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #fafafa 0%, #a1a1aa 100%);
-  }
-
-  .accent-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-  }
-
-  /* Page container */
-  .container-page {
-    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
-  }
-
-  /* Content page container (smaller for readability) */
-  .container-content {
-    @apply mx-auto max-w-3xl px-4 sm:px-6;
-  }
+/* ===== Prose/Typography Styles ===== */
+.prose {
+  --tw-prose-body: var(--color-text-secondary);
+  --tw-prose-headings: var(--color-text-primary);
+  --tw-prose-lead: var(--color-text-secondary);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-text-primary);
+  --tw-prose-counters: var(--color-text-muted);
+  --tw-prose-bullets: var(--color-text-muted);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-text-primary);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions: var(--color-text-muted);
+  --tw-prose-code: var(--color-text-primary);
+  --tw-prose-pre-code: var(--color-text-secondary);
+  --tw-prose-pre-bg: #141414;
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
 }
 
+.prose a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-accent);
+  transition: border-color 0.2s ease;
+}
+
+.prose a:hover {
+  border-color: var(--color-accent-hover);
+}
+
+.prose code {
+  background-color: var(--color-border);
+  padding: 0.25rem 0.375rem;
+  border-radius: 0.25rem;
+  font-weight: 400;
+}
+
+.prose code::before,
+.prose code::after {
+  content: "";
+}

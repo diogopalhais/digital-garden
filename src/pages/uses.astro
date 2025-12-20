@@ -7,7 +7,7 @@ const { Content } = await page.render();
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <section class="container-content py-16">
+  <section class="mx-auto max-w-3xl px-4 sm:px-6 py-16">
     <header class="mb-12">
       <p class="mb-2 text-xs font-medium uppercase tracking-wider text-accent">Setup & Tools</p>
       <h1 class="mb-4 text-4xl font-bold text-text-primary md:text-5xl">
@@ -22,17 +22,22 @@ const { Content } = await page.render();
 </BaseLayout>
 
 <style is:global>
+  @reference "../styles/global.css";
+
   /* Base prose styling for all content pages */
   .prose-content {
     @apply max-w-none text-text-secondary;
   }
 
   .prose-content > p:first-of-type {
-    @apply text-lg leading-relaxed text-text-secondary/80 mb-10 pb-10 border-b border-border/30;
+    @apply text-lg leading-relaxed mb-10 pb-10 border-b;
+    color: color-mix(in srgb, var(--color-text-secondary) 80%, transparent);
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
   }
 
   .prose-content h2 {
-    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b border-accent/30;
+    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b;
+    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
   }
 
   .prose-content h3 {
@@ -57,7 +62,8 @@ const { Content } = await page.render();
   }
 
   .prose-content hr {
-    @apply border-border/30 my-10;
+    @apply my-10;
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
   }
 
   /* Uses page specific styling */
@@ -66,7 +72,8 @@ const { Content } = await page.render();
   }
 
   .prose-uses li {
-    @apply flex items-baseline gap-3 py-3 border-b border-border/20 last:border-b-0;
+    @apply flex items-baseline gap-3 py-3 border-b last:border-b-0;
+    border-color: color-mix(in srgb, var(--color-border) 20%, transparent);
   }
 
   .prose-uses li strong {

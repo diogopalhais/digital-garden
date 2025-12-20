@@ -10,7 +10,7 @@ const updated = page.data.updated || 'Recently';
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <section class="container-content py-16">
+  <section class="mx-auto max-w-3xl px-4 sm:px-6 py-16">
     <header class="mb-12">
       <div class="mb-2 flex items-center gap-3">
         <p class="text-xs font-medium uppercase tracking-wider text-accent">What I'm up to</p>
@@ -28,16 +28,21 @@ const updated = page.data.updated || 'Recently';
 </BaseLayout>
 
 <style is:global>
+  @reference "../styles/global.css";
+
   .prose-now {
     @apply max-w-none text-text-secondary;
   }
 
   .prose-now > p:first-of-type {
-    @apply text-lg leading-relaxed text-text-secondary/80 mb-10 pb-10 border-b border-border/30;
+    @apply text-lg leading-relaxed mb-10 pb-10 border-b;
+    color: color-mix(in srgb, var(--color-text-secondary) 80%, transparent);
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
   }
 
   .prose-now h2 {
-    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b border-accent/30;
+    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b;
+    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
   }
 
   .prose-now h3 {
@@ -83,7 +88,9 @@ const updated = page.data.updated || 'Recently';
   }
 
   .prose-now li:has(input[type="checkbox"]:not(:checked))::before {
-    @apply content-['○'] absolute left-0 top-0 h-auto w-auto rounded-none bg-transparent text-text-muted/40 font-mono text-sm;
+    @apply absolute left-0 top-0 h-auto w-auto rounded-none bg-transparent font-mono text-sm;
+    content: '○';
+    color: color-mix(in srgb, var(--color-text-muted) 40%, transparent);
   }
 
   .prose-now a {
@@ -91,6 +98,7 @@ const updated = page.data.updated || 'Recently';
   }
 
   .prose-now hr {
-    @apply border-border/30 my-10;
+    @apply my-10;
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
   }
 </style>

@@ -5,37 +5,20 @@ export interface Props {
   class?: string;
 }
 
-const { variant = 'default', href, class: className = '' } = Astro.props;
+const { variant = 'default', href, class: className = '' }: Props = Astro.props;
 
 const Element = href ? 'a' : 'span';
+
+const baseClasses = 'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors';
+const variantClasses = {
+  default: 'border-border bg-card text-text-secondary hover:border-border-hover hover:bg-card-hover hover:text-text-primary',
+  accent: 'border-accent/30 bg-accent/10 text-accent hover:border-accent/50 hover:bg-accent/20',
+};
 ---
 
 <Element
   href={href}
-  class:list={[
-    'badge',
-    variant === 'accent' && 'badge-accent',
-    className,
-  ]}
+  class:list={[baseClasses, variantClasses[variant], className]}
 >
   <slot />
 </Element>
-
-<style>
-  .badge {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-text-secondary transition-colors;
-  }
-
-  .badge:hover {
-    @apply border-border-hover bg-card-hover text-text-primary;
-  }
-
-  .badge-accent {
-    @apply border-accent/30 bg-accent/10 text-accent;
-  }
-
-  .badge-accent:hover {
-    @apply border-accent/50 bg-accent/20;
-  }
-</style>
-

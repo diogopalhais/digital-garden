@@ -102,6 +102,8 @@ const { title, description, tags, repo, demo } = project.data;
 </div>
 
 <style>
+  @reference "../styles/global.css";
+
   .project-card {
     @apply relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300;
   }
@@ -130,7 +132,8 @@ const { title, description, tags, repo, demo } = project.data;
   }
 
   .icon-wrapper {
-    @apply flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 text-accent;
+    @apply flex h-8 w-8 items-center justify-center rounded-lg text-accent;
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
   }
 
   .tag {

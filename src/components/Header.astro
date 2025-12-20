@@ -96,12 +96,16 @@ const currentPath = Astro.url.pathname;
 </script>
 
 <style>
+  @reference "../styles/global.css";
+
   header {
     @apply pointer-events-none;
   }
 
   .nav-container {
-    @apply pointer-events-auto hidden md:flex items-center gap-1 rounded-full border border-border/50 bg-card/80 px-2 py-2 backdrop-blur-xl;
+    @apply pointer-events-auto hidden md:flex items-center gap-1 rounded-full border px-2 py-2 backdrop-blur-xl;
+    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-card) 80%, transparent);
     box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.2);
   }
 
@@ -114,7 +118,8 @@ const currentPath = Astro.url.pathname;
   }
 
   .nav-link-active {
-    @apply bg-accent/10 text-accent;
+    @apply text-accent;
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
   }
 
   .nav-slash {
@@ -128,16 +133,21 @@ const currentPath = Astro.url.pathname;
 
   /* Mobile Menu Button */
   .mobile-menu-btn {
-    @apply pointer-events-auto fixed top-6 right-6 flex h-12 w-12 items-center justify-center rounded-full border border-border/50 bg-card/80 text-text-secondary backdrop-blur-xl transition-colors md:hidden;
+    @apply pointer-events-auto fixed top-6 right-6 flex h-12 w-12 items-center justify-center rounded-full border text-text-secondary backdrop-blur-xl transition-colors md:hidden;
+    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-card) 80%, transparent);
   }
 
   .mobile-menu-btn:hover {
-    @apply border-accent/30 text-accent;
+    @apply text-accent;
+    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
   }
 
   /* Mobile Menu */
   .mobile-menu {
-    @apply pointer-events-auto fixed inset-x-4 top-20 rounded-2xl border border-border/50 bg-card/95 p-4 backdrop-blur-xl md:hidden;
+    @apply pointer-events-auto fixed inset-x-4 top-20 rounded-2xl border p-4 backdrop-blur-xl md:hidden;
+    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-card) 95%, transparent);
     box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
   }
 
@@ -154,6 +164,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .mobile-nav-link-active {
-    @apply bg-accent/10 text-accent;
+    @apply text-accent;
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
   }
 </style>

@@ -117,8 +117,11 @@ const {
 </div>
 
 <style>
+  @reference "../styles/global.css";
+
   .hero-card {
-    @apply rounded-3xl border border-border/50 bg-card;
+    @apply rounded-3xl border bg-card;
+    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
   }
 
   .hero-gradient {
