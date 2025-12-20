@@ -3,10 +3,10 @@ const base = import.meta.env.BASE_URL;
 
 const navItems = [
   { href: `${base}`, label: ' ~' },
-  { href: `${base}about/`, label: 'about' },
   { href: `${base}now/`, label: 'now' },
-  { href: `${base}watching/`, label: 'watching' },
   { href: `${base}uses/`, label: 'uses' },
+  { href: `${base}watching/`, label: 'watching' },
+  { href: `${base}whoami/`, label: 'whoami' },
 ];
 
 const currentPath = Astro.url.pathname;
