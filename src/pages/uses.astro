@@ -30,20 +30,33 @@ const { Content } = await page.render();
   }
 
   .content-container article.prose-uses li {
-    @apply flex items-baseline gap-3 py-3 border-b last:border-b-0 pl-0;
+    @apply py-3 border-b last:border-b-0 pl-0;
     border-color: color-mix(in srgb, var(--color-border) 20%, transparent);
+  }
+
+  /* Mobile: hide em-dash by using font-size trick */
+  @media (max-width: 767px) {
+    .content-container article.prose-uses li:has(strong):has(em) {
+      font-size: 0;
+    }
   }
 
   .content-container article.prose-uses li::before {
     @apply content-none hidden;
   }
 
+  .content-container article.prose-uses li strong {
+    @apply block text-sm font-medium text-text-primary;
+    @apply md:inline;
+  }
+
   .content-container article.prose-uses li em {
-    @apply not-italic text-xs text-text-muted ml-auto shrink-0;
+    @apply not-italic text-xs text-text-muted block;
+    @apply md:float-right md:block;
   }
 
   .content-container article.prose-uses li:not(:has(em)) {
-    @apply text-text-secondary;
+    @apply text-text-secondary text-sm;
   }
 
   .content-container article.prose-uses li:not(:has(strong)) {
