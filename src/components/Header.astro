@@ -2,7 +2,7 @@
 const base = import.meta.env.BASE_URL;
 
 const navItems = [
-  { href: `${base}`, label: ' ~' },
+  { href: `${base}`, label: '~' },
   { href: `${base}now/`, label: 'now' },
   { href: `${base}uses/`, label: 'uses' },
   { href: `${base}watching/`, label: 'watching' },
@@ -12,8 +12,9 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="py-6">
-  <nav class="flex justify-center">
+<header class="header-container">
+  <!-- Desktop Navigation -->
+  <nav class="desktop-nav">
     <ul class="nav-container">
       {navItems.map((item) => {
         const isActive = currentPath === item.href || 
@@ -35,71 +36,102 @@ const currentPath = Astro.url.pathname;
     </ul>
   </nav>
 
-  <!-- Mobile Menu Button -->
-  <button
-    id="mobile-menu-btn"
-    class="mobile-menu-btn"
-    aria-label="Toggle menu"
-    aria-expanded="false"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="h-5 w-5"
-    >
-      <line x1="4" x2="20" y1="12" y2="12"></line>
-      <line x1="4" x2="20" y1="6" y2="6"></line>
-      <line x1="4" x2="20" y1="18" y2="18"></line>
-    </svg>
-  </button>
-
-  <!-- Mobile Menu -->
-  <div
-    id="mobile-menu"
-    class="mobile-menu hidden"
-  >
-    <ul class="mobile-nav-list">
-      {navItems.map((item) => {
+  <!-- Mobile Slider Navigation -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-slider" id="mobile-nav-slider">
+      {navItems.map((item, index) => {
         const isActive = currentPath === item.href || 
           (item.href !== base && currentPath.startsWith(item.href));
         return (
-          <li>
-            <a
-              href={item.href}
-              class:list={[
-                'mobile-nav-link',
-                isActive && 'mobile-nav-link-active',
-              ]}
-            >
-              <span class="text-accent">/</span>{item.label}
-            </a>
-          </li>
+          <a
+            href={item.href}
+            class:list={[
+              'mobile-nav-item',
+              isActive && 'mobile-nav-item-active',
+            ]}
+            data-index={index}
+          >
+            <span class="mobile-nav-slash">/</span>
+            <span class="mobile-nav-label">{item.label}</span>
+          </a>
         );
       })}
-    </ul>
-  </div>
+    </div>
+    <!-- Scroll hint arrows -->
+    <div class="mobile-nav-hint mobile-nav-hint-left" id="hint-left" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </div>
+    <div class="mobile-nav-hint mobile-nav-hint-right" id="hint-right" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </div>
+  </nav>
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
+  function initMobileSlider() {
+    const slider = document.getElementById('mobile-nav-slider') as HTMLElement | null;
+    const nav = slider?.closest('.mobile-nav') as HTMLElement | null;
+    if (!slider || !nav) return;
 
-  btn?.addEventListener('click', () => {
-    const isOpen = menu?.classList.toggle('hidden');
-    btn.setAttribute('aria-expanded', String(!isOpen));
-  });
+    // Update scroll hint visibility
+    function updateScrollHints() {
+      const canScrollLeft = slider!.scrollLeft > 5;
+      const canScrollRight = slider!.scrollLeft < (slider!.scrollWidth - slider!.clientWidth - 5);
+      nav!.dataset.canScrollLeft = String(canScrollLeft);
+      nav!.dataset.canScrollRight = String(canScrollRight);
+    }
+
+    // Listen for scroll events
+    slider.addEventListener('scroll', updateScrollHints, { passive: true });
+    
+    // Initial update
+    updateScrollHints();
+
+    // Scroll active item into view on load
+    const activeItem = slider.querySelector('.mobile-nav-item-active');
+    if (activeItem) {
+      activeItem.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
+      setTimeout(updateScrollHints, 100);
+    }
+
+    // Hint animation: briefly scroll right then back to show it's scrollable
+    const hasScrolled = sessionStorage.getItem('nav-hint-shown');
+    if (!hasScrolled && slider.scrollWidth > slider.clientWidth) {
+      setTimeout(() => {
+        slider.scrollTo({ left: 80, behavior: 'smooth' });
+        setTimeout(() => {
+          if (activeItem) {
+            activeItem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          } else {
+            slider.scrollTo({ left: 0, behavior: 'smooth' });
+          }
+          sessionStorage.setItem('nav-hint-shown', 'true');
+        }, 500);
+      }, 600);
+    }
+  }
+
+  // Initialize on page load
+  initMobileSlider();
+  
+  // Re-initialize on Astro view transitions
+  document.addEventListener('astro:page-load', initMobileSlider);
 </script>
 
 <style>
   @reference "../styles/global.css";
 
+  .header-container {
+    @apply py-4 md:py-6;
+  }
+
+  /* Desktop Navigation */
+  .desktop-nav {
+    @apply hidden md:flex justify-center;
+  }
+
   .nav-container {
-    @apply hidden md:flex items-center gap-6;
+    @apply flex items-center gap-6;
   }
 
   .nav-link {
@@ -107,7 +139,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .nav-link:hover {
-    @apply text-text-primary -translate-y-20;
+    @apply text-text-primary;
   }
 
   .nav-link-active {
@@ -137,33 +169,97 @@ const currentPath = Astro.url.pathname;
     @apply underline underline-offset-4;
   }
 
-  /* Mobile Menu Button */
-  .mobile-menu-btn {
-    @apply absolute top-0 right-6 flex h-10 w-10 items-center justify-center text-text-secondary transition-all duration-200 md:hidden;
+  /* Mobile Slider Navigation */
+  .mobile-nav {
+    @apply relative md:hidden;
   }
 
-  .mobile-menu-btn:hover {
-    @apply text-accent -translate-y-0.5;
+  .mobile-nav-slider {
+    @apply flex gap-2 overflow-x-auto px-12 py-3;
+    @apply snap-x snap-mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  /* Mobile Menu */
-  .mobile-menu {
-    @apply absolute inset-x-4 top-14 rounded-xl border border-border bg-card p-4 md:hidden;
+  .mobile-nav-slider::-webkit-scrollbar {
+    display: none;
   }
 
-  .mobile-nav-list {
-    @apply flex flex-col gap-2;
+  .mobile-nav-item {
+    @apply shrink-0 snap-center;
+    @apply px-4 py-2.5 rounded-full;
+    @apply text-sm font-medium text-text-secondary;
+    @apply border border-transparent;
+    @apply transition-all duration-200 ease-out;
+    @apply flex items-center gap-0.5;
   }
 
-  .mobile-nav-link {
-    @apply block px-2 py-2 text-base font-medium text-text-secondary transition-all duration-200;
+  .mobile-nav-item:hover {
+    @apply text-text-primary bg-card;
   }
 
-  .mobile-nav-link:hover {
-    @apply text-text-primary underline underline-offset-4;
+  .mobile-nav-item-active {
+    @apply text-text-primary bg-card border-border font-semibold;
   }
 
-  .mobile-nav-link-active {
-    @apply text-text-primary font-bold;
+  .mobile-nav-slash {
+    @apply text-accent font-bold text-base;
+  }
+
+  .mobile-nav-label {
+    @apply whitespace-nowrap;
+  }
+
+  /* Fade edges to indicate scrollable content */
+  .mobile-nav::before,
+  .mobile-nav::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-16 z-10 pointer-events-none;
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  .mobile-nav::before {
+    @apply left-0;
+    background: linear-gradient(to right, var(--color-background) 40%, transparent 100%);
+  }
+
+  .mobile-nav::after {
+    @apply right-0;
+    background: linear-gradient(to left, var(--color-background) 40%, transparent 100%);
+  }
+
+  .mobile-nav[data-can-scroll-left="true"]::before {
+    @apply opacity-100;
+  }
+
+  .mobile-nav[data-can-scroll-right="true"]::after {
+    @apply opacity-100;
+  }
+
+  /* Scroll hint arrows - static and centered */
+  .mobile-nav-hint {
+    @apply absolute top-1/2 -translate-y-1/2 z-20;
+    @apply flex items-center justify-center;
+    @apply w-6 h-6;
+    @apply text-text-muted;
+    @apply pointer-events-none;
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  .mobile-nav-hint-left {
+    @apply left-1;
+  }
+
+  .mobile-nav-hint-right {
+    @apply right-1;
+  }
+
+  /* Show hints based on scroll position */
+  .mobile-nav[data-can-scroll-left="true"] .mobile-nav-hint-left {
+    @apply opacity-70;
+  }
+
+  .mobile-nav[data-can-scroll-right="true"] .mobile-nav-hint-right {
+    @apply opacity-70;
   }
 </style>
