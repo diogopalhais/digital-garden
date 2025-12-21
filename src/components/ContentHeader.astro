@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  updated?: string;
+  info?: string;
+}
+
+const { title, updated, info } = Astro.props;
+---
+
+<header class="mb-10">
+  <div class="mb-3 flex items-center justify-between">
+    <h1 class="text-text-primary">
+      <span class="text-accent">/</span> {title}
+    </h1>
+    {updated && <span class="uppercase tracking-tight text-accent text-xs">Updated {updated}</span>}
+    {info && <span class="uppercase tracking-tight text-accent text-xs">{info}</span>}
+  </div>
+  
+</header>
+

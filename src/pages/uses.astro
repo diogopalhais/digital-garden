@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import ContentContainer from '@components/ContentContainer.astro';
+import ContentHeader from '@components/ContentHeader.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'uses');
@@ -7,93 +9,48 @@ const { Content } = await page.render();
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <section class="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-    <header class="mb-12">
-      <p class="mb-2 text-xs font-medium uppercase tracking-wider text-accent">Setup & Tools</p>
-      <h1 class="mb-4 text-4xl font-bold text-text-primary md:text-5xl">
-        {page.data.title}
-      </h1>
-    </header>
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 py-16 md:py-24">
+    <ContentContainer>
+      <ContentHeader title={page.data.title} updated={page.data.updated} />
 
-    <article class="prose-content prose-uses">
-      <Content />
-    </article>
+      <article class="prose-uses">
+        <Content />
+      </article>
+    </ContentContainer>
   </section>
 </BaseLayout>
 
 <style is:global>
   @reference "../styles/global.css";
 
-  /* Base prose styling for all content pages */
-  .prose-content {
-    @apply max-w-none text-text-secondary;
-  }
-
-  .prose-content > p:first-of-type {
-    @apply text-lg leading-relaxed mb-10 pb-10 border-b;
-    color: color-mix(in srgb, var(--color-text-secondary) 80%, transparent);
-    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
-  }
-
-  .prose-content h2 {
-    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b;
-    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
-  }
-
-  .prose-content h3 {
-    @apply text-xs font-medium text-text-muted mt-8 mb-3 uppercase tracking-widest pl-3 border-l-2 border-border;
-    letter-spacing: 0.1em;
-  }
-
-  .prose-content p {
-    @apply mb-4 leading-relaxed;
-  }
-
-  .prose-content a {
-    @apply text-accent hover:text-accent-hover transition-colors;
-  }
-
-  .prose-content strong {
-    @apply font-medium text-text-primary;
-  }
-
-  .prose-content em {
-    @apply not-italic text-sm text-text-muted;
-  }
-
-  .prose-content hr {
-    @apply my-10;
-    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
-  }
-
-  /* Uses page specific styling */
-  .prose-uses ul {
+  /* Uses page specific styling - list items as rows */
+  /* Higher specificity to override ContentContainer article styles */
+  .content-container article.prose-uses ul {
     @apply space-y-0 list-none pl-0 mb-8;
   }
 
-  .prose-uses li {
-    @apply flex items-baseline gap-3 py-3 border-b last:border-b-0;
+  .content-container article.prose-uses li {
+    @apply flex items-baseline gap-3 py-3 border-b last:border-b-0 pl-0;
     border-color: color-mix(in srgb, var(--color-border) 20%, transparent);
   }
 
-  .prose-uses li strong {
-    @apply font-medium text-text-primary;
+  .content-container article.prose-uses li::before {
+    @apply content-none hidden;
   }
 
-  .prose-uses li em {
+  .content-container article.prose-uses li em {
     @apply not-italic text-xs text-text-muted ml-auto shrink-0;
   }
 
-  /* Items without em (description) */
-  .prose-uses li:not(:has(em)) {
+  .content-container article.prose-uses li:not(:has(em)) {
     @apply text-text-secondary;
   }
 
-  .prose-uses li:not(:has(strong)) {
+  .content-container article.prose-uses li:not(:has(strong)) {
     @apply text-text-primary text-sm;
   }
 
-  /* Image card styling - consistent with homepage bento cards */
+  /* Image card styling */
   .prose-uses p:has(img) {
     @apply rounded-2xl border border-border overflow-hidden my-8 transition-all duration-300;
     box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);

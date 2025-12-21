@@ -1,58 +1,26 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Badge from '@components/Badge.astro';
+import ContentContainer from '@components/ContentContainer.astro';
+import ContentHeader from '@components/ContentHeader.astro';
 import TraktWatching from '@components/TraktWatching.jsx';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'watching');
 const { Content } = await page.render();
-
-const updated = page.data.updated || 'Recently';
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <section class="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-    <header class="mb-12">
-      <div class="mb-2 flex items-center gap-3">
-        <p class="text-xs font-medium uppercase tracking-wider text-accent">Media Tracking</p>
-        <Badge variant="accent">Synced with Trakt</Badge>
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 py-16 md:py-24">
+    <ContentContainer>
+      <ContentHeader title={page.data.title} info={page.data.info} />
+
+      <article>
+        <Content />
+      </article>
+
+      <div class="mt-10">
+        <TraktWatching client:load />
       </div>
-      <h1 class="mb-4 text-4xl font-bold text-text-primary md:text-5xl">
-        {page.data.title}
-      </h1>
-    </header>
-
-    <article class="prose-watching mb-12">
-      <Content />
-    </article>
-
-    <TraktWatching client:load />
+    </ContentContainer>
   </section>
 </BaseLayout>
-
-<style is:global>
-  @reference "../styles/global.css";
-
-  .prose-watching {
-    @apply max-w-none text-text-secondary;
-  }
-
-  .prose-watching > p:first-of-type {
-    @apply text-lg leading-relaxed mb-8 pb-8 border-b;
-    color: color-mix(in srgb, var(--color-text-secondary) 80%, transparent);
-    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
-  }
-
-  .prose-watching p {
-    @apply mb-4 leading-relaxed;
-  }
-
-  .prose-watching strong {
-    @apply text-text-primary font-medium;
-  }
-
-  .prose-watching a {
-    @apply text-accent hover:text-accent-hover transition-colors;
-  }
-</style>
-

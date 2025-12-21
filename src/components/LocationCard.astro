@@ -10,7 +10,7 @@ interface Props {
 const { 
   location = "Porto, Portugal",
   timezone = "Europe/Lisbon",
-  mapImage = "/images/map.png"
+  mapImage = "/images/porto.jpg"
 } = Astro.props;
 ---
 
@@ -25,20 +25,20 @@ const {
       />
     </div>
     
-    <!-- Warm overlay -->
-    <div class="absolute inset-0 bg-linear-to-br from-accent/10 via-black/30 to-orange/10"></div>
+    <!-- Darkening overlay for legibility -->
+    <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-black/20"></div>
     
     <!-- Content - Glass card -->
-    <div class="absolute top-2 left-2 right-2 lg:top-4 lg:left-4 lg:right-4 z-10">
-      <div class="glass-card rounded-xl p-2 lg:p-4">
+    <div class="absolute bottom-2 left-2 right-2 lg:bottom-4 lg:left-4 lg:right-4 z-10">
+      <div class="glass-card rounded-md p-2 lg:p-4">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-1 lg:gap-4">
           <div>
-            <p class="text-[8px] lg:text-[10px] uppercase tracking-wider text-cream/50 mb-0.5 lg:mb-1">Working remote from</p>
-            <h3 class="text-base lg:text-xl font-bold text-cream">{location}</h3>
+            <p class="text-[8px] lg:text-[10px] uppercase tracking-wider text-cream/70 mb-0.5 lg:mb-1">Working remote from</p>
+            <h3 class="text-base lg:text-xl font-bold text-cream drop-shadow-sm">{location}</h3>
           </div>
           <div class="lg:text-right">
-            <p class="text-[8px] lg:text-[10px] uppercase tracking-wider text-cream/40 mb-0.5 lg:mb-1">Local Time</p>
-            <p class="font-mono text-lg lg:text-2xl font-bold text-cream" id="local-time" data-timezone={timezone}>--:--</p>
+            <p class="text-[8px] lg:text-[10px] uppercase tracking-wider text-cream/60 mb-0.5 lg:mb-1">Local Time</p>
+            <p class="font-mono text-lg lg:text-2xl font-bold text-cream drop-shadow-sm" id="local-time" data-timezone={timezone}>--:--</p>
           </div>
         </div>
       </div>
@@ -69,10 +69,8 @@ const {
   @reference "../styles/global.css";
 
   .glass-card {
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(248, 237, 217, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(248, 237, 217, 0.15);
   }
 </style>
 

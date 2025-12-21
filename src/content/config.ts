@@ -6,6 +6,7 @@ const pages = defineCollection({
     title: z.string(),
     description: z.string(),
     updated: z.string().optional(),
+    info: z.string().optional(),
   }),
 });
 

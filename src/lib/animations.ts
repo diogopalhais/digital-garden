@@ -2,6 +2,7 @@ import { animate, inView, stagger } from 'motion';
 
 /**
  * Initialize staggered fade-up animation for bento cards
+ * Uses CSS animations with JS trigger for optimal performance
  */
 export function initBentoAnimations(): void {
   const cards = document.querySelectorAll('.bento-card');
@@ -16,17 +17,20 @@ export function initBentoAnimations(): void {
   if (prefersReducedMotion) {
     // Just show the cards without animation
     cards.forEach((card) => {
-      (card as HTMLElement).style.opacity = '1';
+      const el = card as HTMLElement;
+      el.style.opacity = '1';
+      el.style.transform = 'none';
     });
     return;
   }
 
-  // Animate cards with stagger
-  animate(
-    cards,
-    { opacity: [0, 1], y: [20, 0] },
-    { duration: 0.5, delay: stagger(0.1), easing: 'ease-out' }
-  );
+  // Trigger CSS animations by adding animate class
+  // Small delay to ensure styles are loaded
+  requestAnimationFrame(() => {
+    cards.forEach((card) => {
+      card.classList.add('animate');
+    });
+  });
 }
 
 /**

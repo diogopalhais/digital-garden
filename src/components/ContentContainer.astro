@@ -1,0 +1,179 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={["content-container", "bento-card", className]}>
+  <slot />
+</div>
+
+<style is:global>
+  @reference "../styles/global.css";
+
+  .content-container {
+    --container-padding: clamp(2rem, 5vw, 3rem);
+    
+    position: relative;
+    max-width: 56rem; /* ~896px - consistent across all content pages */
+    margin: 0 auto;
+    padding: var(--container-padding);
+    
+    /* Match Card component styles */
+    @apply overflow-hidden rounded-md border border-border bg-card;
+    
+    /* Initial animation state */
+    opacity: 0;
+    transform: translateY(64px);
+  }
+
+  .content-container.animate {
+    animation: fadeSlideUp 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(64px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .content-container {
+      opacity: 1;
+      transform: none;
+    }
+    
+    .content-container.animate {
+      animation: none;
+    }
+  }
+
+  /* Header styles */
+  .content-container > header h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+
+  /* ===== Article-scoped typography (only affects MDX content) ===== */
+  .content-container article {
+    @apply max-w-none text-text-secondary;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    letter-spacing: -0.01em;
+  }
+
+  .content-container article p {
+    @apply mb-4 leading-relaxed;
+    text-wrap: pretty;
+  }
+
+  .content-container article > p:first-of-type {
+    @apply text-lg leading-relaxed mb-10 pb-10 border-b;
+    color: color-mix(in srgb, var(--color-text-secondary) 80%, transparent);
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
+  }
+
+  .content-container article h2 {
+    @apply text-lg font-bold text-text-primary mt-14 mb-6 first:mt-0 pb-3 border-b;
+    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  }
+
+  .content-container article h3 {
+    @apply text-sm font-semibold text-text-primary mt-8 mb-2 pl-3 border-l-2;
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  }
+
+  .content-container article strong {
+    @apply text-text-primary font-medium;
+  }
+
+  .content-container article em {
+    @apply text-text-muted not-italic text-sm;
+  }
+
+  .content-container article ul {
+    @apply space-y-2 list-none pl-0 mb-6;
+  }
+
+  .content-container article li {
+    @apply relative pl-4 text-text-secondary;
+  }
+
+  .content-container article li::before {
+    @apply content-[''] absolute left-0 top-[0.6em] h-1 w-1 rounded-full bg-accent;
+  }
+
+  /* Task list styling */
+  .content-container article li:has(input[type="checkbox"]) {
+    @apply pl-0;
+  }
+
+  .content-container article li:has(input[type="checkbox"])::before {
+    @apply content-none;
+  }
+
+  .content-container article input[type="checkbox"] {
+    @apply hidden;
+  }
+
+  .content-container article li:has(input[type="checkbox"]:checked)::before {
+    @apply content-['✓'] absolute left-0 top-0 h-auto w-auto rounded-none bg-transparent text-accent font-mono text-sm;
+  }
+
+  .content-container article li:has(input[type="checkbox"]:not(:checked))::before {
+    @apply absolute left-0 top-0 h-auto w-auto rounded-none bg-transparent font-mono text-sm;
+    content: '○';
+    color: color-mix(in srgb, var(--color-text-muted) 40%, transparent);
+  }
+
+  /* Link styling with arrow icon */
+  .content-container article a {
+    @apply text-text-primary underline decoration-text-muted/40 underline-offset-2 transition-all;
+    text-decoration-thickness: 1px;
+  }
+
+  .content-container article a::after {
+    content: '';
+    display: inline-block;
+    width: 0.65em;
+    height: 0.65em;
+    margin-left: 0.15em;
+    vertical-align: middle;
+    background-color: currentColor;
+    opacity: 0.5;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M7 17L17 7M17 7H7M17 7V17'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .content-container article a:hover {
+    @apply decoration-text-primary/60;
+  }
+
+  .content-container article a:hover::after {
+    opacity: 0.8;
+    transform: translate(1px, -1px);
+  }
+
+  .content-container article hr {
+    @apply my-10;
+    border-color: color-mix(in srgb, var(--color-border) 30%, transparent);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.content-container article a').forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+</script>

@@ -3,49 +3,37 @@ title: colophon
 description: How this digital garden was built, the technology stack, and design philosophy behind it.
 ---
 
-A peek behind the curtain at how this site was built and what inspired it.
-
-## Built With
-
-This digital garden is built with [Astro](https://astro.build), a modern static site generator that ships zero JavaScript by default. Content is written in MDX, allowing me to mix Markdown with interactive React components.
-
-Styling is handled by [Tailwind CSS](https://tailwindcss.com) for rapid, consistent styling, with the Typography plugin for beautiful prose.
-
-Animations are powered by [Motion](https://motion.dev), a lightweight animation library that respects user preferences for reduced motion.
+A peek behind the curtain at how this site was built.
 
 ## Stack
 
-- **Astro** — Framework
-- **React** — Interactive components
-- **MDX** — Content
-- **Tailwind CSS** — Styling
+- **Astro** — Static site framework
+- **React 19** — Interactive components
+- **Tailwind CSS v4** — Styling
 - **Motion** — Animations
+- **MDX** — Content
 - **TypeScript** — Type safety
+- **Cloudflare Workers** — Serverless APIs (Spotify, Trakt)
 
 ## Typography
 
 - **Inter** — UI and body text
-- **JetBrains Mono** — Code and monospace
+- **JetBrains Mono** — Code
 
 ## Colors
 
-| Role | Hex |
-|------|-----|
+| Role | Value |
+|------|-------|
 | Background | `#000000` |
 | Card | `#0a0a0a` |
-| Accent | `#80D580` |
-| Text Primary | `#F8EDD9` |
-| Text Secondary | `#c9c0b0` |
+| Accent | `oklch(0.67 0.185 55)` |
+| Text | `#F8EDD9` |
 
 ## Hosting
 
-Hosted on [GitHub Pages](https://pages.github.com) with automatic deployments via GitHub Actions. The source code is available on GitHub.
-
-## Inspiration
-
-This site draws inspiration from modern developer portfolios and personal sites I admire. The bento grid layout creates an engaging, visual way to present information.
+Static site on [GitHub Pages](https://pages.github.com). Serverless functions on [Cloudflare Workers](https://workers.cloudflare.com).
 
 ## License
 
-Content is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Code is MIT licensed.
+Content: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Code: MIT.
 

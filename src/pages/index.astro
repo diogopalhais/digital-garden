@@ -22,34 +22,78 @@ import ProjectsCard from '@components/ProjectsCard.astro';
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-2">
         
         <!-- Hero Card - Main -->
-        <div class="relative lg:col-span-4 lg:row-span-2">
+        <div class="bento-card relative lg:col-span-4 lg:row-span-2">
           <HeroCard />
         </div>
         
         <!-- Profile Photo & Location Cards - Side by side on mobile -->
         <div class="col-span-1 grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-1 lg:row-span-2">
-          <ProfileCard />
-          <LocationCard />
+          <div class="bento-card">
+            <ProfileCard />
+          </div>
+          <div class="bento-card">
+            <LocationCard />
+          </div>
         </div>
       </div>
       
       <!-- Row 2: Tech Stack Marquee -->
-      <div class="mt-4">
+      <div class="bento-card mt-4">
         <TechStackCard />
       </div>
         
       <!-- Row 3: Projects -->
-      <div class="mt-4">
+      <div class="bento-card mt-4">
         <ProjectsCard />
       </div>
       
       <!-- Row 4: Spotify & Connect -->
-      <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <SpotifyCard />
-        <SocialLinks />
+      <div class="mt-4 flex flex-col gap-4 md:flex-row">
+        <div class="bento-card flex-1">
+          <SpotifyCard />
+        </div>
+        <div class="bento-card flex-1">
+          <SocialLinks />
+        </div>
       </div>
       
     </div>
     
   </section>
 </BaseLayout>
+
+<style>
+  /* Initial state - hidden before animation */
+  .bento-card {
+    opacity: 0;
+    transform: translateY(64px);
+  }
+  
+  /* Animate class applied by JS */
+  :global(.bento-card.animate) {
+    animation: fadeSlideUp 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(64px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .bento-card {
+      opacity: 1;
+      transform: none;
+    }
+    
+    :global(.bento-card.animate) {
+      animation: none;
+    }
+  }
+</style>

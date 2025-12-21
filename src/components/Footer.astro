@@ -2,23 +2,10 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-auto border-t border-border bg-card/30">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
-    <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
-      <!-- Left: Brand + Year -->
-      <div class="flex flex-col items-center gap-2 md:items-start">
-        <span class="text-sm text-text-secondary">
-          © {currentYear} Diogo Palhais
-        </span>
-        <span class="text-xs text-text-muted">
-          Built with Astro from Porto, Portugal 🇵🇹
-        </span>
-      </div>
-
-      <!-- Right: Colophon -->
-      <a href="/colophon/" class="text-sm text-text-secondary transition-colors hover:text-text-primary">
-        Colophon
-      </a>
-    </div>
+<footer class="mt-auto py-8">
+  <div class="flex flex-col items-center gap-2 text-center">
+    <span class="text-xs text-text-muted">
+      © {currentYear} Diogo Palhais · <a href="/colophon/" class="transition-colors hover:text-text-secondary">Colophon</a>
+    </span>
   </div>
 </footer>

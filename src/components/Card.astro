@@ -28,13 +28,19 @@ export interface Props {
    * Enable gradient border effect on hover
    */
   gradient?: boolean;
+
+  /**
+   * Card title (optional) - renders with consistent styling
+   */
+  title?: string;
 }
 
 const { 
   variant = 'default', 
   href, 
   class: className = '', 
-  gradient = false
+  gradient = false,
+  title
 } = Astro.props;
 
 const size: 'sm' | 'wide' | 'tall' | 'lg' = Astro.props.size ?? 'sm';
@@ -55,19 +61,31 @@ const Element = href ? 'a' : 'div';
     'card',
     variant !== 'default' && `card--${variant}`,
     gradient && 'card--gradient',
+    title && 'card--with-title',
     sizeClasses[size],
     href && 'cursor-pointer',
     className,
   ]}
 >
-  <slot />
+  {title ? (
+    <>
+      <div class="card__header">
+        <h3 class="card__title">{title}</h3>
+      </div>
+      <div class="card__content">
+        <slot />
+      </div>
+    </>
+  ) : (
+    <slot />
+  )}
 </Element>
 
 <style>
   @reference "../styles/global.css";
 
   .card {
-    @apply relative overflow-hidden px-8 py-4 rounded-xs border border-border bg-card transition-all duration-300 hover:-translate-y-px hover:border-border-hover hover:bg-card-hover;
+    @apply relative overflow-hidden px-8 py-4 rounded-md border border-border bg-card transition-all duration-300 hover:-translate-y-px hover:border-border-hover;
   }
 
   .card--hero {
@@ -92,6 +110,22 @@ const Element = href ? 'a' : 'div';
 
   .card--gradient:hover::after {
     @apply opacity-100;
+  }
+
+  .card--with-title {
+    @apply h-full flex flex-col;
+  }
+
+  .card__header {
+    @apply pt-2 pb-4;
+  }
+
+  .card__title {
+    @apply text-sm font-medium uppercase tracking-wider text-text-secondary/70;
+  }
+
+  .card__content {
+    @apply py-4 flex-1 flex items-center;
   }
 </style>
 
