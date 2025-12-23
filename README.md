@@ -1,24 +1,26 @@
-# Developer Portfolio 🚀
+# Personal Website & Digital Garden 🌱
 
-A personal portfolio website built with modern web technologies. Features a beautiful bento grid layout, dark mode design, and smooth animations.
+A personal digital garden and portfolio website built with modern web technologies. Features a beautiful bento grid layout, dark mode design, and smooth animations.
 
 ## Features
 
 - **Bento Grid Layout** — Modern, asymmetric card-based design
-- **Dark Mode Only** — Elegant dark theme inspired by [opencode.ai](https://opencode.ai)
-- **MDX Content** — Write in Markdown with component support
-- **Smooth Animations** — Powered by Motion One with reduced motion support
+- **Dark Mode Only** — Elegant dark theme
+- **MDX Content** — Write pages in Markdown with component support
+- **Live Integrations** — Spotify Now Playing & Trakt recently watched
+- **Smooth Animations** — Powered by Motion with reduced motion support
 - **SEO Optimized** — Meta tags, Open Graph, sitemap
-- **Type Safe** — TypeScript throughout with Zod schema validation
+- **Type Safe** — TypeScript throughout
 - **Fast** — Zero JavaScript by default thanks to Astro
 
 ## Tech Stack
 
-- [Astro](https://astro.build) — Static site generator
+- [Astro 4](https://astro.build) — Static site generator
+- [React 19](https://react.dev) — Interactive components
 - [TypeScript](https://www.typescriptlang.org/) — Type safety
-- [Tailwind CSS](https://tailwindcss.com) — Styling
-- [Motion One](https://motion.dev) — Animations
-- [MDX](https://mdxjs.com) — Rich content
+- [Tailwind CSS 4](https://tailwindcss.com) — Styling (via Vite plugin)
+- [Motion](https://motion.dev) — Animations
+- [MDX](https://mdxjs.com) — Rich content pages
 - [Cloudflare Workers](https://workers.cloudflare.com/) — Serverless APIs
 
 ## Getting Started
@@ -26,88 +28,97 @@ A personal portfolio website built with modern web technologies. Features a beau
 ### Prerequisites
 
 - Node.js 18+
-- npm or pnpm
+- pnpm (recommended) or npm
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/diogopalhais/diogopalhais.github.io.git
-cd diogopalhais.github.io
+git clone https://github.com/diogopalhais/digital-garden.git
+cd digital-garden
 
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
+pnpm dev
 ```
 
 ### Commands
 
-| Command         | Action                                       |
-| --------------- | -------------------------------------------- |
-| `npm run dev`   | Start development server at `localhost:4321` |
-| `npm run build` | Build for production to `./dist/`            |
-| `npm run preview` | Preview production build locally           |
-| `npm run format`| Format code with Prettier                    |
+| Command           | Action                                       |
+| ----------------- | -------------------------------------------- |
+| `pnpm dev`        | Start development server at `localhost:4321` |
+| `pnpm build`      | Build for production to `./dist/`            |
+| `pnpm preview`    | Preview production build locally             |
+| `pnpm format`     | Format code with Prettier                    |
 
 ## Project Structure
 
 ```
-diogopalhais.github.io/
+digital-garden/
 ├── src/
-│   ├── components/     # Astro/React components
-│   ├── content/        # MDX content (projects, pages)
+│   ├── components/     # Astro & React components
+│   │   ├── *.astro     # Static Astro components
+│   │   └── *.jsx       # Interactive React components
+│   ├── content/
+│   │   └── pages/      # MDX content pages
+│   ├── data/           # TypeScript data (projects)
 │   ├── layouts/        # Page layouts
 │   ├── lib/            # Utilities and helpers
 │   ├── pages/          # Page routes
 │   └── styles/         # Global styles
 ├── public/             # Static assets
-├── scripts/            # Setup scripts (Spotify OAuth, etc.)
+├── scripts/            # Setup scripts (Spotify/Trakt OAuth)
 ├── serverless/         # Cloudflare Workers
 │   ├── spotify/        # Now Playing API
 │   └── trakt/          # Watching API
 └── astro.config.mjs    # Astro configuration
 ```
 
+## Pages
+
+| Route        | Description                          |
+| ------------ | ------------------------------------ |
+| `/`          | Home with bento grid layout          |
+| `/whoami`    | About page                           |
+| `/now`       | What I'm currently up to             |
+| `/uses`      | Tools, hardware, and software I use  |
+| `/watching`  | Movies & TV shows I've watched       |
+| `/colophon`  | Site credits and technical details   |
+
 ## Content Management
 
-### Adding a Project
+### MDX Pages
 
-Create a new `.mdx` file in `src/content/projects/`:
+Content pages are stored in `src/content/pages/` as MDX files:
 
 ```mdx
 ---
-title: "Project Name"
-description: "Project description"
-date: 2025-11-25
-tags: ["React", "TypeScript"]
-repo: "https://github.com/..."
-demo: "https://..."
-featured: true
+title: "Page Title"
+description: "Page description"
 ---
 
-Project details...
+Your markdown content with component support...
 ```
 
-## Customization
+### Projects
 
-### Colors
+Projects are managed in `src/data/projects.ts`:
 
-Edit the color palette in `tailwind.config.mjs`:
-
-```js
-colors: {
-  background: '#09090b',
-  card: '#18181b',
-  accent: '#10b981',
-  // ...
-}
+```typescript
+export const projects: Project[] = [
+  {
+    name: "Project Name",
+    type: "Project Type",
+    company: "Company Name",  // or role: "Personal Project"
+    image: "/images/projects/image.png",
+    year: "2024",
+    url: "https://...",       // optional
+    sunset: false,            // optional, marks deprecated projects
+  },
+];
 ```
-
-### Site Metadata
-
-Update site URL and metadata in `astro.config.mjs` and `src/components/BaseHead.astro`.
 
 ## Integrations
 
@@ -157,8 +168,9 @@ This site is deployed to GitHub Pages at [diogopalhais.github.io](https://diogop
 
 To deploy elsewhere:
 
-- **Vercel**: `npm run build` and deploy `dist/`
-- **Netlify**: Connect repo and set build command to `npm run build`
+- **Vercel**: `pnpm build` and deploy `dist/`
+- **Netlify**: Connect repo and set build command to `pnpm build`
+- **Cloudflare Pages**: Connect repo and set build command to `pnpm build`
 
 ## License
 
@@ -167,4 +179,4 @@ To deploy elsewhere:
 
 ---
 
-Built with ☕ from Portugal 🇵🇹
+Built with ☕ from Porto, Portugal 🇵🇹
