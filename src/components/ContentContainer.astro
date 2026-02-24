@@ -17,31 +17,18 @@ const { class: className = '' } = Astro.props;
     --container-padding: clamp(2rem, 5vw, 3rem);
     
     position: relative;
-    max-width: 56rem; /* ~896px - consistent across all content pages */
+    max-width: 56rem;
     margin: 0 auto;
     padding: var(--container-padding);
     
-    /* Match Card component styles */
-    @apply overflow-hidden rounded-md border border-border bg-card;
+    @apply overflow-hidden rounded-lg border border-border bg-card;
     
-    /* Initial animation state */
     opacity: 0;
-    transform: translateY(64px);
+    transform: translateY(36px);
   }
 
   .content-container.animate {
-    animation: fadeSlideUp 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(64px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    animation: fadeSlideUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
   @media (prefers-reduced-motion: reduce) {

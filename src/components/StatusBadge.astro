@@ -8,8 +8,21 @@ const { text = "Available for projects" } = Astro.props;
 
 <div class="inline-flex items-center gap-3 rounded-full border border-accent/30 bg-accent/10 px-5 py-2.5">
   <span class="relative flex h-2.5 w-2.5">
-    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+    <span class="status-pulse absolute inline-flex h-full w-full rounded-full bg-accent"></span>
     <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent"></span>
   </span>
   <span class="text-sm font-medium text-accent">{text}</span>
 </div>
+
+<style>
+  .status-pulse {
+    animation: subtlePulse 3s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .status-pulse {
+      animation: none;
+      opacity: 0;
+    }
+  }
+</style>

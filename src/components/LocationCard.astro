@@ -21,6 +21,9 @@ const {
       <img 
         src={mapImage}
         alt={`Map showing ${location}`}
+        width="640"
+        height="480"
+        loading="eager"
         class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-102"
       />
     </div>
@@ -30,7 +33,7 @@ const {
     
     <!-- Content - Glass card -->
     <div class="absolute bottom-2 left-2 right-2 lg:bottom-4 lg:left-4 lg:right-4 z-10">
-      <div class="glass-card rounded-md p-2 lg:p-4">
+      <div class="glass-card rounded-lg p-2 lg:p-4">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-1 lg:gap-4">
           <div>
             <p class="text-[8px] lg:text-[10px] uppercase tracking-wider text-cream/70 mb-0.5 lg:mb-1">Working remote from</p>

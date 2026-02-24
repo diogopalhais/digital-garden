@@ -85,7 +85,11 @@ const Element = href ? 'a' : 'div';
   @reference "../styles/global.css";
 
   .card {
-    @apply relative overflow-hidden px-8 py-4 rounded-md border border-border bg-card transition-all duration-300 hover:-translate-y-px hover:border-border-hover;
+    @apply relative overflow-hidden px-8 py-4 rounded-lg border border-border bg-card transition-all duration-300 hover:border-border-hover;
+  }
+
+  a.card {
+    @apply hover:-translate-y-px;
   }
 
   .card--hero {
@@ -98,7 +102,7 @@ const Element = href ? 'a' : 'div';
 
   .card--gradient::after {
     content: '';
-    @apply absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 -z-10;
+    @apply absolute -inset-px rounded-lg opacity-0 transition-opacity duration-300 -z-10;
     background: linear-gradient(
       135deg,
       rgba(16, 185, 129, 0.3),

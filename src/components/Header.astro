@@ -14,7 +14,7 @@ const currentPath = Astro.url.pathname;
 
 <header class="header-container">
   <!-- Desktop Navigation -->
-  <nav class="desktop-nav">
+  <nav class="desktop-nav" aria-label="Main navigation">
     <ul class="nav-container">
       {navItems.map((item) => {
         const isActive = currentPath === item.href || 
@@ -27,6 +27,7 @@ const currentPath = Astro.url.pathname;
                 'nav-link',
                 isActive && 'nav-link-active',
               ]}
+              aria-current={isActive ? "page" : undefined}
             >
               <span class="nav-slash">/</span><span class="nav-label" data-text={item.label}>{item.label}</span>
             </a>
@@ -50,6 +51,7 @@ const currentPath = Astro.url.pathname;
               isActive && 'mobile-nav-item-active',
             ]}
             data-index={index}
+            aria-current={isActive ? "page" : undefined}
           >
             <span class="mobile-nav-slash">/</span>
             <span class="mobile-nav-label">{item.label}</span>
@@ -122,7 +124,7 @@ const currentPath = Astro.url.pathname;
   @reference "../styles/global.css";
 
   .header-container {
-    @apply py-4 md:py-6;
+    @apply py-4 md:py-6 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   /* Desktop Navigation */

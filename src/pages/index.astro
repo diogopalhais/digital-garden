@@ -63,29 +63,15 @@ import ProjectsCard from '@components/ProjectsCard.astro';
 </BaseLayout>
 
 <style>
-  /* Initial state - hidden before animation */
   .bento-card {
     opacity: 0;
-    transform: translateY(64px);
+    transform: translateY(36px);
   }
   
-  /* Animate class applied by JS */
   :global(.bento-card.animate) {
-    animation: fadeSlideUp 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: fadeSlideUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(64px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .bento-card {
       opacity: 1;

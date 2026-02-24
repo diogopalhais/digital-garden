@@ -84,14 +84,13 @@ const { username = "diogopalhais", links = defaultLinks } = Astro.props;
   }
 
   .social-btn {
-    @apply relative flex items-center justify-center aspect-square rounded-lg text-text-muted border border-border/50 transition-all duration-300 no-underline;
+    @apply relative flex items-center justify-center aspect-square rounded-lg text-text-muted border border-border/50 transition-all duration-300 no-underline cursor-pointer;
     background-color: color-mix(in srgb, var(--color-text-muted) 5%, transparent);
   }
 
   .social-btn:hover {
-    @apply text-text-primary border-border;
+    @apply text-text-primary border-border -translate-y-px;
     background-color: color-mix(in srgb, var(--color-text-muted) 10%, transparent);
-    transform: translateY(-2px);
   }
 
   .social-icon {

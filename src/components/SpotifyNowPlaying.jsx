@@ -28,7 +28,7 @@ export default function SpotifyNowPlaying() {
   if (loading) {
     return (
       <div className="flex items-center gap-5">
-        <div className="bg-border h-20 w-20 animate-pulse rounded-xl" />
+        <div className="bg-border h-20 w-20 animate-pulse rounded-lg" />
         <div className="flex-1 space-y-3">
           <div className="bg-border h-4 w-3/4 animate-pulse rounded-md" />
           <div className="bg-border h-3 w-1/2 animate-pulse rounded-md" />
@@ -40,9 +40,9 @@ export default function SpotifyNowPlaying() {
   if (!data?.isPlaying) {
     return (
       <div className="flex items-center gap-5">
-        <div className="relative flex h-20 w-20 items-center justify-center rounded-xl border border-[#1DB954]/20 bg-linear-to-br from-[#1DB954]/20 to-[#1DB954]/5">
+        <div className="relative flex h-20 w-20 items-center justify-center rounded-lg border border-[#1DB954]/20 bg-linear-to-br from-[#1DB954]/20 to-[#1DB954]/5">
           <SpotifyIcon className="h-8 w-8 text-[#1DB954]/60" />
-          <div className="absolute -inset-px rounded-xl bg-linear-to-br from-[#1DB954]/10 to-transparent opacity-50" />
+          <div className="absolute -inset-px rounded-lg bg-linear-to-br from-[#1DB954]/10 to-transparent opacity-50" />
         </div>
         <div className="flex-1">
           <p className="text-text-primary text-base font-semibold">
@@ -65,10 +65,11 @@ export default function SpotifyNowPlaying() {
     >
       <div className="flex items-center gap-5">
         {/* Album Art */}
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl shadow-xl shadow-black/30">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg" style={{ boxShadow: 'var(--shadow-elevated)' }}>
           <img
             src={data.albumImage}
             alt={data.album}
+            loading="lazy"
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
         </div>

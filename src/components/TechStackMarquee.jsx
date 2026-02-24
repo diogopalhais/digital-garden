@@ -22,10 +22,14 @@ const techStack = [
 
 
 export default function TechStackMarquee() {
+  const gradientColor = typeof document !== 'undefined'
+    ? getComputedStyle(document.documentElement).getPropertyValue('--color-card').trim() || '#0a0a0a'
+    : '#0a0a0a';
+
   return (
     <Marquee
       gradient={true}
-      gradientColor="#0a0a0a"
+      gradientColor={gradientColor}
       gradientWidth={80}
       speed={30}
       pauseOnHover={true}
@@ -36,7 +40,7 @@ export default function TechStackMarquee() {
           className="flex flex-col items-center gap-2 md:gap-3 px-3 md:px-5 mr-2 md:mr-4"
         >
           <i className={`${tech.icon} text-2xl md:text-4xl leading-none`}></i>
-          <span className="text-[10px] md:text-xs font-medium text-[rgba(161,161,170,1)] whitespace-nowrap">
+          <span className="text-[10px] md:text-xs font-medium text-text-muted whitespace-nowrap">
             {tech.name}
           </span>
         </div>

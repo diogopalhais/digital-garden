@@ -24,10 +24,9 @@ export function initBentoAnimations(): void {
     return;
   }
 
-  // Trigger CSS animations by adding animate class
-  // Small delay to ensure styles are loaded
   requestAnimationFrame(() => {
-    cards.forEach((card) => {
+    cards.forEach((card, index) => {
+      (card as HTMLElement).style.animationDelay = `${index * 0.1}s`;
       card.classList.add('animate');
     });
   });

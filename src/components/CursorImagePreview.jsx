@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 /**
  * A floating image preview that follows the cursor when hovering over target elements.
@@ -25,33 +25,34 @@ export default function CursorImagePreview({
   const containerRef = useRef(null);
   const imageRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
-  const [currentImage, setCurrentImage] = useState('');
+  const [currentImage, setCurrentImage] = useState(null);
   const [currentAlt, setCurrentAlt] = useState('');
   
   const mousePos = useRef({ x: 0, y: 0 });
   const previewPos = useRef({ x: 0, y: 0 });
   const animationRef = useRef(null);
+  const isActiveRef = useRef(false);
+
+  useEffect(() => {
+    isActiveRef.current = isActive;
+  }, [isActive]);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Move to body to avoid clipping
     document.body.appendChild(container);
 
     const targetElements = document.querySelectorAll(targetSelector);
     
     const animate = () => {
-      if (isActive) {
-        // Smooth interpolation
+      if (isActiveRef.current) {
         previewPos.current.x += (mousePos.current.x - previewPos.current.x) * smoothing;
         previewPos.current.y += (mousePos.current.y - previewPos.current.y) * smoothing;
 
-        // Calculate position
         let x = previewPos.current.x + offsetX;
         let y = previewPos.current.y - height + offsetY;
 
-        // Viewport boundaries
         if (x + width > window.innerWidth - 10) {
           x = previewPos.current.x - width - 20;
         }
@@ -92,10 +93,8 @@ export default function CursorImagePreview({
       el.addEventListener('mousemove', handleMouseMove);
     });
 
-    // Start animation loop
     animationRef.current = requestAnimationFrame(animate);
 
-    // Initial position off-screen
     container.style.left = '-1000px';
     container.style.top = '-1000px';
 
@@ -108,12 +107,11 @@ export default function CursorImagePreview({
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
-      // Move back before unmount
       if (container.parentNode === document.body) {
         document.body.removeChild(container);
       }
     };
-  }, [targetSelector, width, height, offsetX, offsetY, smoothing, isActive]);
+  }, [targetSelector, width, height, offsetX, offsetY, smoothing]);
 
   return (
     <div
@@ -134,23 +132,26 @@ export default function CursorImagePreview({
           position: 'relative',
           width: `${width}px`,
           height: `${height}px`,
-          borderRadius: '12px',
+          borderRadius: '8px',
           overflow: 'hidden',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+          boxShadow: 'var(--shadow-overlay)',
         }}
       >
-        <img
-          ref={imageRef}
-          src={currentImage}
-          alt={currentAlt ? `Preview of ${currentAlt}` : 'Project preview'}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transition: 'transform 0.5s ease',
-            transform: isActive ? 'scale(1.05)' : 'scale(1)',
-          }}
-        />
+        {currentImage && (
+          <img
+            ref={imageRef}
+            src={currentImage}
+            alt={currentAlt ? `Preview of ${currentAlt}` : 'Project preview'}
+            loading="lazy"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transition: 'transform 0.5s ease',
+              transform: isActive ? 'scale(1.05)' : 'scale(1)',
+            }}
+          />
+        )}
         <div
           style={{
             position: 'absolute',
@@ -164,4 +165,3 @@ export default function CursorImagePreview({
     </div>
   );
 }
-

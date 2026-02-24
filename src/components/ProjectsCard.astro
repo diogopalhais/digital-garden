@@ -36,7 +36,7 @@ const {
           data-image={project.image}
           data-name={project.name}
           style={`--delay: ${index * 0.05}s`}
-          tabindex="0"
+          tabindex={project.url ? undefined : "0"}
         >
           <div class="project-content">
             <div class="project-main">

@@ -29,6 +29,7 @@ const hasPopup = description || tags.length > 0 || location;
     rel="noopener noreferrer"
     class="company-link inline-flex items-center gap-2.5 rounded-md border px-3 py-1.5 text-sm font-semibold transition-all"
     style={`border-color: ${color}40; background-color: ${color}15; color: ${color};`}
+    aria-describedby={hasPopup ? "company-tooltip" : undefined}
   >
     <img 
       src={logo}
@@ -42,10 +43,10 @@ const hasPopup = description || tags.length > 0 || location;
   </a>
   
   {hasPopup && (
-    <div class="company-popup absolute left-0 bottom-full z-50 mb-3 w-80 opacity-0 invisible transition-all duration-200 -translate-y-2">
-      <div class="popup-card rounded-xl border border-border bg-card p-5 shadow-2xl shadow-black/50">
+    <div class="company-popup absolute left-0 bottom-full z-50 mb-3 w-80 opacity-0 invisible transition-all duration-200 -translate-y-2" role="tooltip" id="company-tooltip">
+      <div class="popup-card rounded-lg border border-border bg-card p-5" style="box-shadow: var(--shadow-elevated);">
         <div class="flex items-start gap-4">
-          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl overflow-hidden bg-white/5">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg overflow-hidden bg-white/5">
             <img 
               src={logo}
               alt={name}
@@ -84,7 +85,8 @@ const hasPopup = description || tags.length > 0 || location;
 </div>
 
 <style>
-  .company-link-wrapper:hover .company-popup {
+  .company-link-wrapper:hover .company-popup,
+  .company-link-wrapper:focus-within .company-popup {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -92,7 +94,6 @@ const hasPopup = description || tags.length > 0 || location;
 
   .company-link:hover {
     filter: brightness(1.2);
-    transform: scale(1.02);
   }
 </style>
 
