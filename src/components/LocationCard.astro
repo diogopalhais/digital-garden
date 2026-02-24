@@ -1,31 +1,23 @@
 ---
 import Card from './Card.astro';
+import PortoMap from './PortoMap';
 
 interface Props {
   location?: string;
   timezone?: string;
-  mapImage?: string;
 }
 
 const { 
   location = "Porto, Portugal",
   timezone = "Europe/Lisbon",
-  mapImage = "/images/porto.jpg"
 } = Astro.props;
 ---
 
 <Card variant="media" class="location-card group h-full min-h-[180px] lg:min-h-[240px]">
   <div class="relative h-full">
-    <!-- Map Background Image -->
+    <!-- Map Background -->
     <div class="absolute inset-0 overflow-hidden">
-      <img 
-        src={mapImage}
-        alt={`Map showing ${location}`}
-        width="640"
-        height="480"
-        loading="eager"
-        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-102"
-      />
+      <PortoMap client:visible />
     </div>
     
     <!-- Darkening overlay for legibility -->

@@ -98,6 +98,12 @@
       transition-duration: 0.01ms !important;
     }
   }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
 }
 
 /* ===== Shared Animation Keyframes ===== */
